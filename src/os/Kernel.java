@@ -48,7 +48,10 @@ public class Kernel {
 		System.out.println(obj);
     }
 
-   
+	public static String askTheUserForInput() {
+		print("Please enter a value");
+		return input();
+	}
 
 	public static String input() {
     Scanner scanner = new Scanner(System.in);
@@ -58,8 +61,9 @@ public class Kernel {
     return input;
 }
 
+
 	public static void main(String[] args) {
-    
+    askTheUserForInput();
 }
 
 	private static void tryInput() {
