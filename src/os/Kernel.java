@@ -16,7 +16,7 @@ public class Kernel {
 3. print(Object obj); Print data on the screen. //integer or string or anything else.                    DONE
 4. input(); Take text input from the user. 										                         DONE
 5. ??: Reading data from memory. 											                             DONE
-6. ??: Writing data to memory.
+6. ??: Writing data to memory. 											                                 DONE
 7. Ask the user for input in a nice way and input it.					                                 DONE
 8. Print from To. 																						 DONE
 //not sure of 5,6 */
@@ -75,7 +75,15 @@ public class Kernel {
 		}
 		return null;
 	}
-	
+	public static void writeToMemory(String varName, String value) {
+		for (int i = 0; i < TheOS.memory.length; i++) {
+			if (TheOS.memory[i][0] == null) {
+				TheOS.memory[i][0] = varName;
+				TheOS.memory[i][1] = value;
+				return;
+			}
+		}
+	}
 
 	public static void main(String[] args) {
    
