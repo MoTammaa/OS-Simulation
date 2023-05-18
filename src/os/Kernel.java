@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.Buffer;
+import java.util.Scanner;
 
 public class Kernel {
 	/*1. ‘Kernel’:
@@ -47,13 +48,24 @@ public class Kernel {
 		System.out.println(obj);
     }
 
-    public static String input() {
-        return null;
-    }
+   
+
+	public static String input() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Enter input: ");
+    String input = scanner.nextLine();
+    scanner.close();
+    return input;
+}
 
 	public static void main(String[] args) {
-		
+    
 }
+
+	private static void tryInput() {
+		String input = input();
+		System.out.println("Input: " + input);
+	}
 
 	private static void tryWriteToDisk() {
 		String filename = "output.txt";
