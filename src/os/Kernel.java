@@ -1,11 +1,9 @@
 package os;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.Scanner;
 
 public class Kernel {
@@ -21,21 +19,22 @@ public class Kernel {
 8. Print from To. 																						 DONE
 //not sure of 5,6 */
     public static String readFromDisk(String filename) {
-    try {
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-            sb.append(System.lineSeparator());
-        }
-        return sb.toString();
-    } catch (IOException e) {
-        e.printStackTrace();
-        return null;
-    }
-}
+    
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+			}
+			return sb.toString();
+		} catch (IOException e) {	
+			e.printStackTrace();
+			return null;
 
+			
+		}
+}
    public static void writeToDisk(String text, String filename) {
     try {
         FileWriter fw = new FileWriter(filename, true);
@@ -86,7 +85,7 @@ public class Kernel {
 	}
 
 	public static void main(String[] args) {
-   
+  
 }
 
 
