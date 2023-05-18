@@ -72,26 +72,7 @@ public class Kernel {
    
 }
 
-	private static void tryInput() {
-		String input = input();
-		System.out.println("Input: " + input);
-	}
 
-	private static void tryWriteToDisk() {
-		String filename = "output.txt";
-		String text = "third line";
-		writeToDisk(text, filename);
-	}
-
-	private static void tryReadFromDisk() {
-		String filename = "Program_1.txt";
-		String contents = readFromDisk(filename);
-		if (contents != null) {
-		    System.out.println("Contents of " + filename + ":");
-		    System.out.println(contents);
-		} else {
-		    System.out.println("Failed to read " + filename);
-		}
-	}
+	
 
 }
