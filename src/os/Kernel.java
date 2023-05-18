@@ -3,6 +3,7 @@ package os;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.Buffer;
 
@@ -32,10 +33,18 @@ public class Kernel {
     }
 }
 
-    public static void writeToDisk(String text, String filename) {
+   public static void writeToDisk(String text, String filename) {
+    try {
+        FileWriter fw = new FileWriter(filename, true);
+        fw.write(text + "\n"); // add newline character
+        fw.close();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     public static void print(Object obj) {
+		
     }
 
     public static String input() {
@@ -43,14 +52,24 @@ public class Kernel {
     }
 
 	public static void main(String[] args) {
-    String filename = "Program_1.txt";
-    String contents = readFromDisk(filename);
-    if (contents != null) {
-        System.out.println("Contents of " + filename + ":");
-        System.out.println(contents);
-    } else {
-        System.out.println("Failed to read " + filename);
-    }
+		
 }
+
+	private static void tryWriteToDisk() {
+		String filename = "output.txt";
+		String text = "third line";
+		writeToDisk(text, filename);
+	}
+
+	private static void tryReadFromDisk() {
+		String filename = "Program_1.txt";
+		String contents = readFromDisk(filename);
+		if (contents != null) {
+		    System.out.println("Contents of " + filename + ":");
+		    System.out.println(contents);
+		} else {
+		    System.out.println("Failed to read " + filename);
+		}
+	}
 
 }
