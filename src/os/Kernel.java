@@ -44,7 +44,7 @@ public class Kernel {
 }
 
     public static void print(Object obj) {
-		
+		System.out.println(obj);
     }
 
     public static String input() {
