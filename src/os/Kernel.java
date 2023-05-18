@@ -11,12 +11,14 @@ import java.util.Scanner;
 public class Kernel {
 	/*1. ‘Kernel’:
 	/*Functions:
-1. readFromDisk(String filename); Read the data of any file from the disk.
-2.writeToDisk(String text, String filename); Write text output to a file in the disk.
-3. print(Object obj); Print data on the screen. //integer or string or anything
-4. input(); Take text input from the user.
+1. readFromDisk(String filename); Read the data of any file from the disk.                               DONE
+2.writeToDisk(String text, String filename); Write text output to a file in the disk.            		 DONE
+3. print(Object obj); Print data on the screen. //integer or string or anything else.                    DONE
+4. input(); Take text input from the user. 										                         DONE
 5. ??: Reading data from memory.
 6. ??: Writing data to memory.
+7. Ask the user for input in a nice way and input it.					                                 DONE
+8. Print from To. 																						 DONE
 //not sure of 5,6 */
     public static String readFromDisk(String filename) {
     try {
@@ -60,10 +62,14 @@ public class Kernel {
     scanner.close();
     return input;
 }
-
+	public static void printFromTo(int from, int to) {
+		for (int i = from; i <= to; i++) {
+			System.out.print(i+" ");
+		}
+}
 
 	public static void main(String[] args) {
-    askTheUserForInput();
+   
 }
 
 	private static void tryInput() {
