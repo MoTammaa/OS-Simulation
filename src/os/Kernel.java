@@ -15,7 +15,7 @@ public class Kernel {
 2.writeToDisk(String text, String filename); Write text output to a file in the disk.            		 DONE
 3. print(Object obj); Print data on the screen. //integer or string or anything else.                    DONE
 4. input(); Take text input from the user. 										                         DONE
-5. ??: Reading data from memory.
+5. ??: Reading data from memory. 											                             DONE
 6. ??: Writing data to memory.
 7. Ask the user for input in a nice way and input it.					                                 DONE
 8. Print from To. 																						 DONE
@@ -67,6 +67,15 @@ public class Kernel {
 			System.out.print(i+" ");
 		}
 }
+	public static String readFromMemory(String varName) {
+		for (int i = 0; i < TheOS.memory.length; i++) {
+			if (TheOS.memory[i][0].equals(varName)) {
+				return TheOS.memory[i][1];
+			}
+		}
+		return null;
+	}
+	
 
 	public static void main(String[] args) {
    
