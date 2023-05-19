@@ -66,22 +66,23 @@ public class Kernel {
 			System.out.print(i+" ");
 		}
 }
-	public static String readFromMemory(String varName) {
-		for (int i = 0; i < TheOS.memory.length; i++) {
-			if (TheOS.memory[i][0].equals(varName)) {
-				return TheOS.memory[i][1];
+	public static String readFromMemory(String varName, int start,int end) {
+		for (int i = start; i < end; i++) {
+			if (MemoryManager.memory[i][0].equals(varName)) {
+				return MemoryManager.memory[i][1];
 			}
 		}
 		return null;
 	}
-	public static void writeToMemory(String varName, String value) {
-		for (int i = 0; i < TheOS.memory.length; i++) {
-			if (TheOS.memory[i][0] == null) {
-				TheOS.memory[i][0] = varName;
-				TheOS.memory[i][1] = value;
+	public static void writeToMemory(String varName, String value,int start,int end) {
+		for (int i = start; i < end; i++) {
+			if (MemoryManager.memory[i][0] == null) {
+				MemoryManager.memory[i][0] = varName;
+				MemoryManager.memory[i][1] = value;
 				return;
 			}
 		}
+		throw new RuntimeException("Memory is full");
 	}
 
 	public static void main(String[] args) {

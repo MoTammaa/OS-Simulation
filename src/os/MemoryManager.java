@@ -1,6 +1,6 @@
 package os;
 
-public class TheOS {
+public class MemoryManager {
     static String [][] memory = new String[40][2]; 
     // 40 rows, 2 columns
     // 40 rows for 40 memory locations
