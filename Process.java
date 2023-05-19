@@ -58,6 +58,9 @@ public class Process {
 
     public void semWait(Mutex mutex) {
         if (mutex.isIslocked()) {
+            if(mutex.getProcess() == this){
+                return;
+            }
             mutex.getBlockedQueue().add(this);
             OS.addToBlockedQueue(this);
         } else {
