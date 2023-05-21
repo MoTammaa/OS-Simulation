@@ -1,4 +1,4 @@
-package os;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -66,7 +66,7 @@ public class Kernel {
 			System.out.print(i+" ");
 		}
 }
-	public static String readFromMemory(String varName, int start,int end) {
+	public static Object readFromMemory(String varName, int start,int end) {
 		for (int i = start; i < end; i++) {
 			if (MemoryManager.memory[i][0].equals(varName)) {
 				return MemoryManager.memory[i][1];

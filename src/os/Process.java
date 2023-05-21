@@ -1,20 +1,20 @@
 import java.util.ArrayList;
 
 public class Process {
-   private PCB pcb;
+   private ProcessControlBlock pcb;
 
   private  ArrayList<Mutex> mutexes;
 
-    public Process(PCB pcb) {
+    public Process(ProcessControlBlock pcb) {
         this.pcb = pcb;
         this.mutexes = new ArrayList<Mutex>();
     }
 
-    public PCB getPcb() {
+    public ProcessControlBlock getPcb() {
         return pcb;
     }
 
-    public void setPcb(PCB pcb) {
+    public void setPcb(ProcessControlBlock pcb) {
         this.pcb = pcb;
     }
 
@@ -39,7 +39,13 @@ public class Process {
 
 
 
-
+    public void executeNextInstruction() {
+		
+	}
+	
+	public boolean isFinished() {
+		return true;
+	}
 
 
 
