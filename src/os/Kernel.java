@@ -1,4 +1,4 @@
-
+package os;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -86,7 +86,7 @@ public class Kernel {
 	}
 
 	public static void main(String[] args) {
-  
+  System.out.println(readFromDisk("Program_1.txt"));
 }
 
 

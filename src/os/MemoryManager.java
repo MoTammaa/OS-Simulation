@@ -1,3 +1,4 @@
+package os;
 import java.io.*;
 public class MemoryManager {
     private int size = 40;

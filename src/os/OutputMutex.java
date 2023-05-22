@@ -1,5 +1,5 @@
 
-
+package os;
 public class OutputMutex extends Mutex {
     
     public OutputMutex() {

@@ -1,13 +1,12 @@
+package os;
 import java.util.ArrayList;
 
 public class Process {
    private ProcessControlBlock pcb;
 
-  private  ArrayList<Mutex> mutexes;
 
     public Process(ProcessControlBlock pcb) {
         this.pcb = pcb;
-        this.mutexes = new ArrayList<Mutex>();
     }
 
     public ProcessControlBlock getPcb() {
@@ -18,14 +17,7 @@ public class Process {
         this.pcb = pcb;
     }
 
-    public ArrayList<Mutex> getMutexes() {
-        return mutexes;
-    }
-
-    public void setMutexes(ArrayList<Mutex> mutexes) {
-        this.mutexes = mutexes;
-    }
-
+ 
 
 
 
@@ -64,32 +56,33 @@ public class Process {
 
     public void semWait(Mutex mutex) {
         if (mutex.isIslocked()) {
-            if(mutex.getProcess() == this){
+            if(mutex.getProcessID()== this.getPcb().getProcessID()){
                 return;
             }
-            mutex.getBlockedQueue().add(this);
-            OS.addToBlockedQueue(this);
+            mutex.getBlockedQueue().add(this.getPcb().getProcessID());
+            OS.addToBlockedQueue(this.getPcb().getProcessID());
+            this.getPcb().setProcessState(State.BLOCKED);
         } else {
             mutex.setIslocked(true);
-            mutex.setProcess(this);
-            this.getMutexes().add(mutex);
+            mutex.setProcessID(this.getPcb().getProcessID());
+          
         }
     }
 
     public void semSignal(Mutex mutex) {
         if (mutex.getBlockedQueue().isEmpty()) {
             mutex.setIslocked(false);
-            mutex.setProcess(null);
+            mutex.setProcessID(-1);
             
         } else {
-            Process x = mutex.getBlockedQueue().remove();
-            mutex.setProcess(x);
-            x.getMutexes().add(mutex);
+            int x = mutex.getBlockedQueue().remove();
+            mutex.setProcessID(x);
+            this.getPcb().setProcessState(State.BLOCKED);
             OS.removeFromBlockedQueue(x);
         }
 
 
-        this.getMutexes().remove(mutex);
+      
 
     }
 
