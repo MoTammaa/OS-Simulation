@@ -65,6 +65,9 @@ public class Kernel {
 		for (int i = from; i <= to; i++) {
 			System.out.print(i+" ");
 		}
+		System.out.println();
+		System.out.println();
+		System.out.println();
 }
 	public static Object readFromMemory(String varName, int start,int end) {
 		for (int i = start; i < end; i++) {
@@ -74,9 +77,18 @@ public class Kernel {
 		}
 		return null;
 	}
-	public static void writeToMemory(String varName, String value,int start,int end) {
+	public static void writeToMemory(String varName, Object value,int start,int end) {
 		for (int i = start; i < end; i++) {
-			if (MemoryManager.memory[i][0] == null) {
+			if (MemoryManager.memory[i][0] == null || MemoryManager.memory[i][0].equals(varName)/* overwrite a variable */) {
+				// if(i <= start+5 && i <= start+7){
+				// 	if(!varName.startsWith("Instruction")){
+				// 		continue;
+				// 	}
+				// }
+				// if(!varName.equals("processID") &&  !varName.equals("programCounter") && !varName.equals("processState")
+				// 	&& !varName.equals("startMemoryBoundary") && !varName.equals("endMemoryBoundary") && !varName.startsWith("instruction")){
+				// 		//it's a variable
+				// 	}
 				MemoryManager.memory[i][0] = varName;
 				MemoryManager.memory[i][1] = value;
 				return;

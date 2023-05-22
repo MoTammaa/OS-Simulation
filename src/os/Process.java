@@ -2,7 +2,7 @@ package os;
 
 import java.util.ArrayList;
 
-public class Process {
+public class Process implements Comparable<Process>{
    private ProcessControlBlock pcb;
 
 
@@ -35,23 +35,35 @@ public class Process {
     public void executeNextInstruction() {
         int id = this.getPcb().getProcessID();
 
-        int one = Integer.parseInt((String) MemoryManager.memory[0][1]);
+        int one =(int) MemoryManager.memory[0][1];
         int pc = pcb.getProgramCounter();
-        
+        pcb.setProgramCounter(pc+1);
+
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
          
         if(id == one){
+            MemoryManager.memory[2][1] = pcb.getProgramCounter();
             instruction.execute(0 , 19);
         }
         else{
+             MemoryManager.memory[22][1] = pcb.getProgramCounter();
             instruction.execute(20 , 39);
         }
 
 		
 	}
+    /// inst 1 
+    // inst 2 
+    // inst 3 
+    // inst 4 
+    // inst 5 
+    // nulllll <----pc
 	
 	public boolean isFinished() {
-		return true;
+        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
+        return pcb.getProgramCounter() > this.getPcb().getEndMemoryBoundary() 
+            || MemoryManager.memory[pcb.getProgramCounter()][0] == null;
+		
 	}
 
 
@@ -100,6 +112,19 @@ public class Process {
       
 
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(! (obj instanceof Process))  return false;
+        Process p = (Process) obj;
+        return this.getPcb().getProcessID() == p.getPcb().getProcessID();
+    }
+
+	@Override
+	public int compareTo(Process o) {
+		// TODO Auto-generated method stub
+		return this.pcb.getProcessID() - o.getPcb().getProcessID();
+	}
 
 
 

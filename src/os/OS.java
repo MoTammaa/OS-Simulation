@@ -54,72 +54,13 @@ public class OS {
 
 
 
+    public static Queue<Integer> getReadyQueue() {
+        return readyQueue;
+    }
+
+
     public static void main(String[]args){
-    //     //Test Mutex is updated correctly 
-    //     OS os = new OS();
-    //     PCB pcb1 = new PCB(1, "null", 1,  new int []{1});
-    //     PCB pcb2 = new PCB(2, "null", 2,  new int []{2});
-    //     PCB pcb3 = new PCB(3, "null", 3,  new int []{3});
-    //     Process p1 = new Process(pcb1);
-    //     Process p2 = new Process(pcb2);
-    //     Process p3 = new Process(pcb3);
-
-    //     p1.semWait(outpMutex);
-    //     p2.semWait(inpMutex);
-    //     p3.semWait(filMutex);
-
-    //     // System.out.println("First semwait with no collision");
-    //     // System.out.println("Output Mutex");
-    //     // outpMutex.printMutex();
-    //     // System.out.println("Input Mutex");
-    //     // inpMutex.printMutex();
-    //     // System.out.println("File Mutex");
-    //     // filMutex.printMutex();
-
-
-
-    //     p1.semWait(inpMutex);
-    //     p2.semWait(filMutex);
-    //     p3.semWait(outpMutex);
-
-
-
-    //     // System.out.println("First semwait with after collision");
-    //     // System.out.println("Output Mutex");
-    //     // outpMutex.printMutex();
-    //     // System.out.println("Input Mutex");
-    //     // inpMutex.printMutex();
-    //     // System.out.println("File Mutex");
-    //     // filMutex.printMutex();
-
-    //     // System.out.println("The General Blocked Queue: ");
-    //     // System.out.println("Blocked Queue: " + blockedQueue);
-
-    //     // System.out.println("Releasing the Output Mutex first time : ");
-    //      p1.semSignal(outpMutex);
-    //     // System.out.println("Output Mutex");
-    //     // outpMutex.printMutex();
-    //     // System.out.println("Input Mutex");
-    //     // inpMutex.printMutex();
-    //     // System.out.println("File Mutex");
-    //     // filMutex.printMutex();
-
-    //     // System.out.println("The General Blocked Queue: ");
-    //     // System.out.println("Blocked Queue: " + blockedQueue);
-
-
-    //     System.out.println("Releasing the Output Mutex second time : ");
-    //     p1.semSignal(outpMutex);
-    //     System.out.println("Output Mutex");
-    //    outpMutex.printMutex();
-    //     System.out.println("Input Mutex");
-    //     inpMutex.printMutex();
-    //     System.out.println("File Mutex");
-    //     filMutex.printMutex();
-
-
-
-    // }
+   
     
 
 
@@ -129,13 +70,26 @@ public class OS {
     Kernel kernel = new Kernel();
 
     MemoryManager memoryManager = new MemoryManager();
+    Object [][] memory = memoryManager.memory;
 
+    Interpeter interpeter = new Interpeter("Program_2.txt");
+  //  System.out.println("State of p1 alone : "+((String)memory[1][0])+" "+((State)memory[1][1]));
 
-    Interpeter interpeter = new Interpeter("Program_1.txt");
-
-    System.out.println("First Check:");
-    System.out.println("Memory:"+memoryManager.memory);
+  //  System.out.println("First Check:");
+   // System.out.println("Memory:"+memoryManager.memory);
+  //  System.out.println("Ready Queue:"+readyQueue);
     //System.out.println("Ready Queue:"+readyQueue);
+    
+    // interpeter = new Interpeter("Program_2.txt");
+
+
+    //  System.out.println("State of p1  : "+((String)memory[1][0])+" "+((State)memory[1][1]));
+    //   System.out.println("State of p2 : "+((String)memory[21][0])+" "+((State)memory[21][1]));
+
+    // interpeter = new Interpeter("Program_3.txt");
+   // System.out.println(kernel.readFromDisk("hardDisk.txt"));
+       
+    
     
 
 

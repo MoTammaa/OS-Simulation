@@ -85,14 +85,17 @@ public class MemoryManager {
     }
 
     public static void freeMemory(int start,int end) {
-       
+       String text = "";
 
         // fady makn w sheel el process(es) w 7ot mkanhom null
         for (int i = start; i <= end; i++) {
+            text += (memory[i][0]+"") + " " + (memory[i][1]+"") + "\n";
+           
             memory[i][0] = null;
             memory[i][1] = null;
-        }
 
+        }
+         Kernel.writeToDisk(text, "hardDisk.txt");
        
     }
 

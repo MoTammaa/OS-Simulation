@@ -15,6 +15,14 @@ public class ProcessControlBlock  {
 		this.endMemoryBoundary = endMemoryBoundary;
 			
 	}
+	public ProcessControlBlock (int processID ,State s  ,int programCounter , int startMemoryBoundary,int endMemoryBoundary) {
+		this.processID = processID;
+		this.processState = s;
+		this.programCounter = programCounter;
+		this.startMemoryBoundary = startMemoryBoundary;
+		this.endMemoryBoundary = endMemoryBoundary;
+			
+	}
 
 	public int getProcessID() {
 		return processID;

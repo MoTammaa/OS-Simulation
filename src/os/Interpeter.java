@@ -13,6 +13,11 @@ public class Interpeter {
     public Interpeter(String filename) {
 
         textToProcess(readFile(filename));
+        if(lastID == 1){
+            Scheduler s = new Scheduler();
+            s.startSchedule();
+        }
+        lastID++;
     }
 
     public ArrayList<String> readFile(String fileName) {
@@ -34,7 +39,7 @@ public class Interpeter {
         return null;
     }
     public void textToProcess (ArrayList<String> lines ){
-          int memoryStart,memoryEnd;
+          int memoryStart=-1,memoryEnd=-1;
          Object [][] memory = MemoryManager.memory;
      
       if(memory[0][1] == null){
@@ -51,7 +56,7 @@ public class Interpeter {
             memoryStart = 20;
             memoryEnd = 39;
          }
-         else{
+          if(((State)memory[21][1]).equals( State.RUNNING)){
             memoryStart = 0;
             memoryEnd = 19;
        }
@@ -66,7 +71,7 @@ public class Interpeter {
   writeProcessToMem(memoryStart, memoryEnd, pcb, lines);
   OS.addToReadyQueue(lastID);
 
-        lastID++;
+        
     }
 
 
@@ -92,11 +97,20 @@ public class Interpeter {
         memory[memStart+4][0] = "endMemoryBoundary";
         memory[memStart+4][1] = Pcb.getEndMemoryBoundary();
 
-        //5,6,7 left empty for variables
+        memory[memStart+5][0] = null;
+        memory[memStart+5][1] = null;
+        
+        memory[memStart+6][0] = null;
+        memory[memStart+6][1] = null;
 
+        memory[memStart+7][0] = null;
+        memory[memStart+7][1] =null;
+        //5,6,7 left empty for variables
+        int j = 0 ;
         for(int i = memStart+8;(i<memEnd && !lines.isEmpty());i++){
-            memory[i][0] = "Instruction"+i;
-            memory[i][1] = lines.remove(i-(memStart+8));
+            memory[i][0] = "Instruction"+j;
+            memory[i][1] = lines.remove(0);
+            j++;
         }
 
         if(!lines.isEmpty()){
