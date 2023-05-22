@@ -1,7 +1,7 @@
 package os;
 
 public class InstructionParser {
-    public Instruction parseInstruction(String instruction) {
+    public static  Instruction parseInstruction(String instruction) {
         String[] tokens = instruction.split(" ");
         String type = tokens[0];
 

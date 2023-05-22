@@ -84,19 +84,16 @@ public class MemoryManager {
         // nextAvailableIndex = memoryEnd + 1;
     }
 
-    public void freeMemory(Process process) {
-        int memoryStart = process.getPcb().getStartMemoryBoundary();
-        int memoryEnd = process.getPcb().getEndMemoryBoundary();
+    public static void freeMemory(int start,int end) {
+       
 
         // fady makn w sheel el process(es) w 7ot mkanhom null
-        for (int i = memoryStart; i <= memoryEnd; i++) {
-            memory[i] = null;
+        for (int i = start; i <= end; i++) {
+            memory[i][0] = null;
+            memory[i][1] = null;
         }
 
-        // for fresh start mn el awel
-        if (memoryStart < nextAvailableIndex) {
-            nextAvailableIndex = memoryStart;
-        }
+       
     }
 
     public void swapProcessToDisk(Process process) {
@@ -115,7 +112,7 @@ public class MemoryManager {
         } catch (IOException e) {
             System.out.println("Error saving process data to disk: " + e.getMessage());
         }
-        freeMemory(process);
+       // freeMemory(process);
 
     }
 

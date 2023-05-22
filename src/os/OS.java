@@ -120,6 +120,27 @@ public class OS {
 
 
     // }
-    }
+    
 
+
+
+    OS os = new OS();
+
+    Kernel kernel = new Kernel();
+
+    MemoryManager memoryManager = new MemoryManager();
+
+
+    Interpeter interpeter = new Interpeter("Program_1.txt");
+
+    System.out.println("First Check:");
+    System.out.println("Memory:"+memoryManager.memory);
+    //System.out.println("Ready Queue:"+readyQueue);
+    
+
+
+
+
+
+    }
 }
