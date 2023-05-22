@@ -5,28 +5,28 @@ import java.util.Queue;
 
 public abstract class Mutex{
 
-    private Queue<Process> blockedQueue;
+    private Queue<Integer> blockedQueue;
 
     private boolean islocked;
-    private Process Process;
+    private int processID;
 
 
 
 
-    public Process getProcess() {
-        return Process;
+    public int getProcessID() {
+        return processID;
     }
-    public void setProcess(Process p) {
-        Process = p;
+    public void setProcessID(int p) {
+        processID = p;
     }
   
 
 
 
-    public Queue<Process> getBlockedQueue() {
+    public Queue<Integer> getBlockedQueue() {
         return blockedQueue;
     }
-    public void setBlockedQueue(Queue<Process> blockedQueue) {
+    public void setBlockedQueue(Queue<Integer> blockedQueue) {
         this.blockedQueue = blockedQueue;
     }
     public boolean isIslocked() {
@@ -37,9 +37,9 @@ public abstract class Mutex{
     }
     public Mutex() {
         //why there is error here
-        this.blockedQueue = new LinkedList<Process>();
+        this.blockedQueue = new LinkedList<Integer>();
         this.islocked = false;
-        this.Process = null;
+        this.processID = -1;
     }
     
 
@@ -47,12 +47,12 @@ public abstract class Mutex{
 
         System.out.println("Mutex is locked: " + this.islocked);
         System.out.println("Mutex blocked queue: " + this.blockedQueue);
-        if(Process == null){
+        if(processID == -1){
             System.out.println("Mutex process: " + "null");
             return;   
 
         }
-        System.out.println("Mutex process: " + this.Process.getPcb().getProcessID());   
+        System.out.println("Mutex process: " + this.processID);   
 
     }
 

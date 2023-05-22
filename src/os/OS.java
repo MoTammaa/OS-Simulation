@@ -5,8 +5,8 @@ import java.util.Queue;
 //    static String [][] memory = new String[40][2]; 
 
 public class OS {
-    private static Queue<Process> readyQueue;
-    private static Queue<Process> blockedQueue;
+    private static Queue<Integer> readyQueue;
+    private static Queue<Integer> blockedQueue;
 
     private static OutputMutex outpMutex;
     private static InputMutex inpMutex;
@@ -14,15 +14,15 @@ public class OS {
 
     
 
-    public OS(Queue<Process> readyQueue, Queue<Process> blockedQueue) {
+    public OS(Queue<Integer> readyQueue, Queue<Integer> blockedQueue) {
         this.readyQueue = readyQueue;
         this.blockedQueue = blockedQueue;
     }
 
     
     public OS(){
-        this.readyQueue = new LinkedList<Process>();
-        this.blockedQueue = new LinkedList<Process>();
+        this.readyQueue = new LinkedList<Integer>();
+        this.blockedQueue = new LinkedList<Integer>();
          outpMutex = new OutputMutex();
          inpMutex = new InputMutex();
          filMutex = new FileMutex();
@@ -36,20 +36,20 @@ public class OS {
     
 
  
-    public static void addToReadyQueue(Process process) {
-        readyQueue.add(process);
+    public static void addToReadyQueue(int processID) {
+        readyQueue.add(processID);
     }
     
-    public static void addToBlockedQueue(Process process) {
-        blockedQueue.add(process);
+    public static void addToBlockedQueue(int processID) {
+        blockedQueue.add(processID);
     }
 
-    public static void removeFromReadyQueue(Process process) {
-        readyQueue.remove(process);
+    public static void removeFromReadyQueue(int processID) {
+        readyQueue.remove(processID);
     }
 
-    public static void removeFromBlockedQueue(Process process) {
-        blockedQueue.remove(process);
+    public static void removeFromBlockedQueue(int processID) {
+        blockedQueue.remove(processID);
     }
 
 
