@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Interpeter {
+    int lastID = 1 ;
     public Interpeter() {
 
     }
@@ -27,6 +28,14 @@ public class Interpeter {
         }
 
         return null;
+    }
+    public void textToProcess (ArrayList<String> lines ){
+       
+
+
+
+
+        lastID++;
     }
 
 

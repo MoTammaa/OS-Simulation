@@ -33,6 +33,17 @@ public class Process {
 
 
     public void executeNextInstruction() {
+        int id = this.getPcb().getProcessID();
+        int one = Integer.parseInt((String) MemoryManager.memory[0][1]);
+         int pc = pcb.getProgramCounter();
+        Instruction instruction = (Instruction) MemoryManager.memory[pc][1];
+        if(id == one){
+            instruction.execute(0 , 19);
+        }
+        else{
+            instruction.execute(20 , 39);
+        }
+
 		
 	}
 	
