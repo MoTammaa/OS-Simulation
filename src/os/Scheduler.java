@@ -21,9 +21,17 @@ public class Scheduler {
 			Process p  = getPBID(x);
 			p.getPcb().setProcessState(State.RUNNING);
 			p.executeNextInstruction();
+			if(OS.isBlocked(p.getPcb().getProcessID())) {
+				p.getPcb().setProcessState(State.BLOCKED);
+				continue;
+			}
 			
 			if(p.isFinished() == false) {
 				p.executeNextInstruction();
+				if(OS.isBlocked(p.getPcb().getProcessID())) {
+				p.getPcb().setProcessState(State.BLOCKED);
+				continue;
+			}
 			}
 			if(p.isFinished() == false) {
 				OS.getReadyQueue().add(p.getPcb().getProcessID());

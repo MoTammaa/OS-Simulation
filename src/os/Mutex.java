@@ -43,10 +43,41 @@ public abstract class Mutex{
     }
 
     public void semWait(int pid){
+        if(islocked){
+            blockedQueue.add(pid);
+            OS.addToBlockedQueue(pid);
+            
+        }
+        else{
+            islocked = true;
+            processID = pid;
+        }
         //logic todo
     }
     public void semSignal(int pid){
+        if(processID == pid){
+            if(blockedQueue.isEmpty()){
+                islocked = false;
+                processID = -1;
+            }
+            else{
+                processID = blockedQueue.poll();
+                OS.removeFromBlockedQueue(processID);
+                changeProcessState(processID);
+                OS.addToReadyQueue(processID);
+            }
+        }
         //logic todo
+    }
+    private void changeProcessState(int processID2) {
+        Object [][] memory = MemoryManager.memory;
+        if(memory[1][1] != null ){
+            Kernel.writeToMemory((String)memory[1][0], State.BLOCKED, 0, 19);
+        }
+        else{
+            Kernel.writeToMemory((String)memory[21][0], State.BLOCKED, 20, 39);
+        }
+
     }
     public  void printMutex(){
 
@@ -60,6 +91,30 @@ public abstract class Mutex{
         System.out.println("Mutex process: " + this.processID);   
 
     }
+    
+public static void main(String[] args) {
+    Mutex mutex = new InputMutex();
+   
+    mutex.printMutex();
+    System.out.println();
+    mutex.semWait(1);
+    mutex.printMutex();
+    System.out.println();
+    mutex.semWait(2);
+    mutex.printMutex();
+    System.out.println();
+    mutex.semWait(3);
+    mutex.printMutex();
+    System.out.println();
+    mutex.semSignal(1);
+    mutex.printMutex();
+    System.out.println();
+    mutex.semSignal(2);
+    mutex.printMutex();
+    System.out.println();
+    mutex.semSignal(3);
+    mutex.printMutex();
+}
 
 
     

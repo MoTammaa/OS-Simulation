@@ -39,10 +39,11 @@ public class Instruction {
 
     private void print(int start, int end){
         String name = (String) args[0];
-        name = name.substring(4, name.length() - 1);
-        System.out.println("NAME : "+name);
-        System.out.println("START : "+start+5);
-        System.out.println("END : "+(end-12));
+        // name = name.substring(4, name.length() - 1);
+        // System.out.println("NAME : "+name);
+        // System.out.println("START : "+start+5);
+        // System.out.println("END : "+(end-12));
+        System.out.println("THE NAME : "+name);
         Object b =  Kernel.readFromMemory(name, start+5, end-12);
         Kernel.print(b);
     }
@@ -121,8 +122,19 @@ public class Instruction {
             argument0 = args[0];
         //if arg is "input" --->   readFile input
         //then execute the input first, get the return value, then use it as an argument for readFile
-        return Kernel.readFromDisk(argument0.toString());
+        // System.out.println("argument0 : "+argument0);
+        // System.out.println("argument0.toString() : "+argument0.toString());
+        // System.out.println(args.length);
+        // String s = argument0.toString();
+
+        return Kernel.readFromDisk(checkIfVar(argument0.toString(),start,end));
     }
+    private String checkIfVar(String string, int start, int end) {
+       Object r =  Kernel.readFromMemory(string, start+5,start+7);
+
+        return r == null ? string : r.toString();
+    }
+
     private void semWait(int start, int end) {
         Mutex MtobeUsed = (args[0].equals("userInput"))? OS.inpMutex : (args[0].equals("userOutput"))? OS.outpMutex :
                 (args[0].equals("file"))? OS.filMutex : null;
