@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public class Scheduler {
 	
-	
+	private static int timeSlice = 0;
 
 	public Scheduler() {
 		
@@ -15,7 +15,8 @@ public class Scheduler {
 	
 	public void startSchedule() {
 		while(OS.getReadyQueue().size()>0) {
-			System.out.println("WE STARTED");
+			System.out.println("\n************************************");
+			System.out.println("------------------We are in the scheduler Time Slice: "+timeSlice++);
 			int x = OS.getReadyQueue().remove();
 			// execute 2 instructions
 			Process p  = getPBID(x);
@@ -53,10 +54,8 @@ public class Scheduler {
 				
 
 			}
-			
-			
-			
-			
+
+
 		}			
 	}
 	

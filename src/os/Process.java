@@ -25,9 +25,9 @@ public class Process implements Comparable<Process>{
 
 
 
-    public String toString(){
-        return pcb.getProcessID()+"";
-    }
+    //public String toString(){
+//        return pcb.getProcessID()+"";
+//    }
 
 
 
@@ -40,7 +40,7 @@ public class Process implements Comparable<Process>{
         pcb.setProgramCounter(pc+1);
 
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
-        System.out.println("Executing Instruction:  => "+ (instruction == null?"null": instruction.toString()));
+        System.out.println("Executing Instruction (process>'" + pcb.processID  +"'):  => "+ (instruction == null?"null": instruction.toString()));
         if(instruction.toString().equals("semSignal( userInput )")){
             System.out.println("here");
         }
@@ -64,7 +64,7 @@ public class Process implements Comparable<Process>{
     // nulllll <----pc
 	
 	public boolean isFinished() {
-        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
+        //System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
         return pcb.getProgramCounter() > this.getPcb().getEndMemoryBoundary() 
             || MemoryManager.memory[pcb.getProgramCounter()][0] == null;
 		
@@ -130,6 +130,16 @@ public class Process implements Comparable<Process>{
 		return this.pcb.getProcessID() - o.getPcb().getProcessID();
 	}
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder( "Process'" + this.getPcb().getProcessID()+"' (");
+        sb.append("state="+this.getPcb().getProcessState().toString()+", ")
+            .append("pc="+this.getPcb().getProgramCounter()+", ")
+                .append("memory=["+this.getPcb().getStartMemoryBoundary()+","+this.getPcb().getEndMemoryBoundary()+"]")
+                    .append(")");
+
+
+        return sb.toString();
+    }
 
 
 

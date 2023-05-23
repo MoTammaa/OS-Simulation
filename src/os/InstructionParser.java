@@ -35,10 +35,10 @@ public class InstructionParser {
                 for (int i = 2; i < tokens.length; i++) {
                     args2[1] += tokens[i] + (i>= tokens.length-1? "":" ");
                 }
-                System.out.print("Object arr >>");
-                for (Object o: args2) {
-                    System.out.print(o.toString() + "  ");
-                } System.out.println();
+//                System.out.print("Object arr >>");
+//                for (Object o: args2) {
+//                    System.out.print(o.toString() + "  ");
+//                } System.out.println();
                 Instruction check = parseInstruction((String) args2[1]);
                 args2[1] = check == null ? args2[1] : check; // value or instruction
 
