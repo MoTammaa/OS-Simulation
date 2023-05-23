@@ -20,10 +20,14 @@ public class Interpeter {
         lastID++;
     }
     public Interpeter(String filename1 , String filename2) {
-
+        boolean start = false;
         textToProcess(readFile(filename1));
-        textToProcess(readFile(filename2));
         if(lastID == 1){
+           start = true;
+        }
+        lastID++;
+        textToProcess(readFile(filename2));
+        if(start){
             Scheduler s = new Scheduler();
             s.startSchedule();
         }

@@ -23,6 +23,13 @@ public class Scheduler {
 			p.executeNextInstruction();
 			if(OS.isBlocked(p.getPcb().getProcessID())) {
 				p.getPcb().setProcessState(State.BLOCKED);
+				p.getPcb().setProgramCounter(p.getPcb().getProgramCounter()-1);
+				if(p.getPcb().getStartMemoryBoundary() == 0){
+					MemoryManager.memory[2][1] = p.getPcb().getProgramCounter();
+				}
+				else {
+					MemoryManager.memory[22][1] = p.getPcb().getProgramCounter();
+				}
 				continue;
 			}
 			
@@ -30,6 +37,13 @@ public class Scheduler {
 				p.executeNextInstruction();
 				if(OS.isBlocked(p.getPcb().getProcessID())) {
 				p.getPcb().setProcessState(State.BLOCKED);
+				p.getPcb().setProgramCounter(p.getPcb().getProgramCounter()-1);
+				if(p.getPcb().getStartMemoryBoundary() == 0){
+					MemoryManager.memory[2][1] = p.getPcb().getProgramCounter();
+				}
+				else {
+					MemoryManager.memory[22][1] = p.getPcb().getProgramCounter();
+				}
 				continue;
 			}
 			}
