@@ -1,3 +1,7 @@
-assign a 1
-assign b 20
+semWait userInput
+assign a input
+assign b input
+semSignal userInput
+semWait userOutput
 printFromTo a b
+semSignal userOutput

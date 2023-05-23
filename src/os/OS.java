@@ -8,9 +8,9 @@ public class OS {
     private static Queue<Integer> readyQueue;
     private static Queue<Integer> blockedQueue;
 
-    private static OutputMutex outpMutex;
-    private static InputMutex inpMutex;
-    private static FileMutex filMutex;
+     static OutputMutex outpMutex;
+     static InputMutex inpMutex;
+     static FileMutex filMutex;
 
     
 
@@ -72,7 +72,7 @@ public class OS {
     MemoryManager memoryManager = new MemoryManager();
     Object [][] memory = memoryManager.memory;
 
-    Interpeter interpeter = new Interpeter("Program_2.txt");
+    Interpeter interpeter = new Interpeter("Program_3.txt");
   //  System.out.println("State of p1 alone : "+((String)memory[1][0])+" "+((State)memory[1][1]));
 
   //  System.out.println("First Check:");
