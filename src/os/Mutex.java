@@ -63,6 +63,7 @@ public abstract class Mutex{
             else{
                 processID = blockedQueue.poll();
                 OS.removeFromBlockedQueue(processID);
+                blockedQueue.remove(processID);
                 changeProcessState(processID);
                 OS.addToReadyQueue(processID);
             }
