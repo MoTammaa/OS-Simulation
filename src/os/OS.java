@@ -72,7 +72,7 @@ public class OS {
     MemoryManager memoryManager = new MemoryManager();
     Object [][] memory = memoryManager.memory;
 
-    Interpeter interpeter = new Interpeter("Program_3.txt");
+    Interpeter interpeter = new Interpeter("Program_1.txt");
   //  System.out.println("State of p1 alone : "+((String)memory[1][0])+" "+((State)memory[1][1]));
 
   //  System.out.println("First Check:");

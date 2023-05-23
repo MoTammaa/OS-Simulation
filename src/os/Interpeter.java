@@ -68,12 +68,18 @@ public class Interpeter {
 
 
   ProcessControlBlock pcb = new ProcessControlBlock(lastID,8,memoryStart,memoryEnd);
+  
   writeProcessToMem(memoryStart, memoryEnd, pcb, lines);
   OS.addToReadyQueue(lastID);
 
         
     }
-
+    public static void printMemory(){
+        Object [][] memory = MemoryManager.memory;
+        for(int i = 0 ; i < 40 ; i++){
+            System.out.println("Memory["+i+"][0] = "+memory[i][0]+" Memory["+i+"][1] = "+memory[i][1]);
+        }
+    }
 
 
 
@@ -83,6 +89,7 @@ public class Interpeter {
 
         memory[memStart][0] = "processID";
         memory[memStart][1] = Pcb.getProcessID();
+        
 
         memory[memStart+1][0] = "processState";
         memory[memStart+1][1] = Pcb.getProcessState();
@@ -105,6 +112,7 @@ public class Interpeter {
 
         memory[memStart+7][0] = null;
         memory[memStart+7][1] =null;
+       
         //5,6,7 left empty for variables
         int j = 0 ;
         for(int i = memStart+8;(i<memEnd && !lines.isEmpty());i++){
@@ -112,6 +120,7 @@ public class Interpeter {
             memory[i][1] = lines.remove(0);
             j++;
         }
+       
 
         if(!lines.isEmpty()){
             throw new RuntimeException("Not enough memory to store the process");
