@@ -41,7 +41,7 @@ public class Process implements Comparable<Process>{
 
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
         System.out.println("Executing Instruction:  => "+ (instruction == null?"null": instruction.toString()));
-        if(instruction.toString().equals("semWait( userInput )")){
+        if(instruction.toString().equals("semSignal( userInput )")){
             System.out.println("here");
         }
          

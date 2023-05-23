@@ -19,6 +19,7 @@ public class Interpeter {
         }
         lastID++;
     }
+
     public Interpeter(String filename1 , String filename2) {
         boolean start = false;
         textToProcess(readFile(filename1));

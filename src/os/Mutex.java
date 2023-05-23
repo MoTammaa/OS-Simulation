@@ -43,7 +43,7 @@ public abstract class Mutex{
     }
 
     public void semWait(int pid){
-        if(islocked){
+        if(  islocked ){
             blockedQueue.add(pid);
             OS.addToBlockedQueue(pid);
             
