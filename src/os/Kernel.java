@@ -97,6 +97,14 @@ public class Kernel {
 		throw new RuntimeException("Memory is full");
 	}
 
+	public static void semWait(Mutex m, int pid){
+		m.semWait(pid);
+
+	}
+	public static void semSignal(Mutex m, int pid){
+		m.semSignal(pid);
+
+	}
 	public static void main(String[] args) {
   System.out.println(readFromDisk("Program_1.txt"));
 }

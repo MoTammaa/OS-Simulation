@@ -8,9 +8,9 @@ public class OS {
     private static Queue<Integer> readyQueue;
     private static Queue<Integer> blockedQueue;
 
-    private static OutputMutex outpMutex;
-    private static InputMutex inpMutex;
-    private static FileMutex filMutex;
+     static OutputMutex outpMutex;
+     static InputMutex inpMutex;
+     static FileMutex filMutex;
 
     
 

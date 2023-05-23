@@ -41,8 +41,13 @@ public abstract class Mutex{
         this.islocked = false;
         this.processID = -1;
     }
-    
 
+    public void semWait(int pid){
+        //logic todo
+    }
+    public void semSignal(int pid){
+        //logic todo
+    }
     public  void printMutex(){
 
         System.out.println("Mutex is locked: " + this.islocked);
