@@ -40,6 +40,7 @@ public class Process implements Comparable<Process>{
         pcb.setProgramCounter(pc+1);
 
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
+        System.out.println("Executing Instruction:  => "+ (instruction == null?"null": instruction.toString()));
          
         if(id == one){
             MemoryManager.memory[2][1] = pcb.getProgramCounter();

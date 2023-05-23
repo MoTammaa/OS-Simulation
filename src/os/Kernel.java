@@ -36,6 +36,7 @@ public class Kernel {
 		}
 }
    public static void writeToDisk(String text, String filename) {
+		if(!filename.endsWith(".txt")) filename =  filename.concat(".txt");
     try {
         FileWriter fw = new FileWriter(filename, true);
         fw.write(text + "\n"); // add newline character
@@ -56,9 +57,9 @@ public class Kernel {
 
 	public static String input() {
     Scanner scanner = new Scanner(System.in);
-    System.out.print("Enter input: ");
+    System.out.println("Enter input: ");
     String input = scanner.nextLine();
-    scanner.close();
+    //scanner.close();
     return input;
 }
 	public static void printFromTo(int from, int to) {

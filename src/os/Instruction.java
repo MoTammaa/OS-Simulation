@@ -13,7 +13,7 @@ public class Instruction {
     public Object execute(int start, int end) {
         switch (type) {
             case readFile:
-                readFile(start, end); return null;
+                return readFile(start, end);
 
             case print:
                 print(start, end); return null;
@@ -27,7 +27,7 @@ public class Instruction {
             case writeFile:
                 writeFile(start, end); return null;
             case input:
-                input(); return null;
+                return input();
             case semSignal:
                 semSignal(start, end); return null;
             case semWait:
@@ -49,10 +49,10 @@ public class Instruction {
     private void printFromTo(int start, int end){
         // System.out.println((String)args[0]+"    "+(String)args[1]);
         String val1 = (String) Kernel.readFromMemory(   ((String)args[0])    , start, end);
-        val1 = val1.substring(4,val1.length()-1);
+        //val1 = val1.substring(4,val1.length()-1);
 
         String val2 = (String) Kernel.readFromMemory(   ((String)args[1])    , start, end);
-        val2 = val2.substring(4,val2.length()-1);
+        //val2 = val2.substring(4,val2.length()-1);
         Kernel.printFromTo( Integer.parseInt(val1), Integer.parseInt(val2));
         // Kernel.printFromTo( Integer.parseInt(val1), Integer.parseInt(val2);
 
@@ -82,13 +82,13 @@ public class Instruction {
         else
             argument0 = args[0];
         if(args[1] instanceof Instruction)
-            argument1 = (Instruction)((Instruction) args[1]).execute(start,end);
+            argument1 = ((Instruction) args[1]).execute(start,end);
         else
             argument1 = args[1];
 
 
             // System.out.println("THE ARGS : "+args[0] + " " + args[1] );
-        Kernel.writeToMemory(((String) args[0]), ((String) args[1]), x, y);
+        Kernel.writeToMemory(argument0.toString(), argument1.toString(), x, y);
 //        }
     }
     private Object input(){
@@ -97,20 +97,26 @@ public class Instruction {
     private void writeFile(int start, int end){
         Object argument0, argument1;
         if(args[0] instanceof Instruction)
-            argument0 = (Instruction)((Instruction) args[0]).execute(start,end);
+            argument0 = ((Instruction) args[0]).execute(start,end);
         else
             argument0 = args[0];
         if(args[1] instanceof Instruction)
-            argument1 = (Instruction)((Instruction) args[1]).execute(start,end);
+            argument1 = ((Instruction) args[1]).execute(start,end);
         else
             argument1 = args[1];
 
-        Kernel.writeToDisk(argument0.toString(), argument1.toString());
+        Object filename = Kernel.readFromMemory(argument0.toString(), start,end);
+        Object data = Kernel.readFromMemory(argument1.toString(), start,end);
+        if(data == null || filename == null){
+            System.out.println("Writing nulls or to nulls Not supported");
+            return;
+        }
+        Kernel.writeToDisk( data.toString(), filename.toString());
     }
     private String readFile(int start, int end){
         Object argument0;
         if(args[0] instanceof Instruction)
-            argument0 = (Instruction)((Instruction) args[0]).execute(start,end);
+            argument0 = ((Instruction) args[0]).execute(start,end);
         else
             argument0 = args[0];
         //if arg is "input" --->   readFile input
@@ -126,7 +132,7 @@ public class Instruction {
             return;
         }
 
-        Kernel.semWait(MtobeUsed, (Integer)MemoryManager.memory[start][0]);
+        Kernel.semWait(MtobeUsed, (Integer)MemoryManager.memory[start][1]);
     }
     private void semSignal(int start, int end){
         Mutex MtobeUsed = (args[0].equals("userInput"))? OS.inpMutex : (args[0].equals("userOutput"))? OS.outpMutex :
@@ -137,14 +143,18 @@ public class Instruction {
             return;
         }
 
-        Kernel.semSignal(MtobeUsed, (Integer)MemoryManager.memory[start][0]);
+        Kernel.semSignal(MtobeUsed, (Integer)MemoryManager.memory[start][1]);
     }
     @Override
     public String toString() {
-        if(type == InstType.readFile) {
-            return type + " " + args[0];
+//        if(type == InstType.readFile) {
+//            return type + "( " + args[0]+" )";
+//        }
+        StringBuilder ret = new StringBuilder(type + "( " );
+        for ( Object o : args) {
+            ret.append(o.toString()).append(", ");
         }
-
-        return type + " " + String.join(" ", args.toString());
+        return ret.substring(0, ret.length() - 2).concat(" )");
+        //return type + "( " + String.join(" ", args.toString()) + " )";
     }
 }

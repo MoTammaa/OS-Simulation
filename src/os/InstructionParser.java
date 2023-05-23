@@ -20,6 +20,8 @@ public class InstructionParser {
 
             case "print":
                 Object[] args = new Object[1];
+
+                args[0] = "";
                 for (int i = 1; i < tokens.length; i++) {
                     args[0] += tokens[i] + (i>= tokens.length-1? "":" ");
                 }
@@ -29,9 +31,14 @@ public class InstructionParser {
             case "assign":
                 Object[] args2 = new Object[2];
                 args2[0] = tokens[1]; // the variable
+                args2[1] = "";
                 for (int i = 2; i < tokens.length; i++) {
                     args2[1] += tokens[i] + (i>= tokens.length-1? "":" ");
                 }
+                System.out.print("Object arr >>");
+                for (Object o: args2) {
+                    System.out.print(o.toString() + "  ");
+                } System.out.println();
                 Instruction check = parseInstruction((String) args2[1]);
                 args2[1] = check == null ? args2[1] : check; // value or instruction
 
@@ -54,6 +61,7 @@ public class InstructionParser {
                 Instruction ch = parseInstruction(tokens[1]);
                 args5[0] = ch == null? tokens[1]: ch; // the variable
 
+                args5[1] = "";
                 for (int i = 2; i < tokens.length; i++) {
                     args5[1] += tokens[i] + (i>= tokens.length-1? "":" ");
                 }
