@@ -75,7 +75,7 @@ public class OS {
     MemoryManager memoryManager = new MemoryManager();
     Object [][] memory = memoryManager.memory;
 
-    Interpeter interpeter = new Interpeter("Program_1.txt","PFTP1.txt");
+    Interpreter interpreter = new Interpreter("Program_2.txt");
    // interpeter = new Interpeter("Program_3.txt");
     //interpeter = new Interpeter("Program_1.txt");
   //  System.out.println("State of p1 alone : "+((String)memory[1][0])+" "+((State)memory[1][1]));

@@ -10,24 +10,24 @@ public class Instruction {
         this.args = args;
     }
 
-    public Object execute(int start, int end) {
+    public Object execute(int start, int end, int pc) {
         switch (type) {
             case readFile:
-                return readFile(start, end);
+                readFile(start, end, pc); return null;
 
             case print:
                 print(start, end); return null;
 
             case assign:
-                assign(start, end); return null;
+                assign(start, end, pc); return null;
 
             case printFromTo:
                 printFromTo(start, end); return null;
 
             case writeFile:
-                writeFile(start, end); return null;
+                writeFile(start, end, pc); return null;
             case input:
-                return input();
+                input(pc); return null;
             case semSignal:
                 semSignal(start, end); return null;
             case semWait:
@@ -61,7 +61,7 @@ public class Instruction {
         //int b = 7
         // printFrom(a,b)
     }
-    private  void assign(int start, int end){
+    private  void assign(int start, int end, int pc){
 //        if (args[1] == null) {
 //            // take input
 //            String in = Kernel.askTheUserForInput();
@@ -70,20 +70,14 @@ public class Instruction {
 //        } else { // a 5
             int x = start + 5;
             int y = start + 7;
-//            if (start == 0) { // 0 1 2 3 4 5 6 7
-//                x = 5;
-//                y = 7;
-//            } else { // 20 21 22 23 24 25 26 27
-//                x = 25;
-//                y = 27;
-//            }
         Object argument0, argument1;
-        if(args[0] instanceof Instruction)
-            argument0 = (Instruction)((Instruction) args[0]).execute(start,end);
-        else
+//        if(args[0] instanceof Instruction)
+//            argument0 = (Instruction)((Instruction) args[0]).execute(start,end);
+//        else
             argument0 = args[0];
         if(args[1] instanceof Instruction)
-            argument1 = ((Instruction) args[1]).execute(start,end);
+            //get the data from input or readFile instruction just above me
+            argument1 = MemoryManager.memory[pc-1][1] /*OLD>>((Instruction) args[1]).execute(start,end)*/;
         else
             argument1 = args[1];
 
@@ -92,17 +86,18 @@ public class Instruction {
         Kernel.writeToMemory(argument0.toString(), argument1.toString(), x, y);
 //        }
     }
-    private Object input(){
-        return Kernel.askTheUserForInput();
+    private void input(int pc){
+        //replace instruction with the actual input value
+        MemoryManager.memory[pc][1] = Kernel.askTheUserForInput();
     }
-    private void writeFile(int start, int end){
+    private void writeFile(int start, int end, int pc){
         Object argument0, argument1;
-        if(args[0] instanceof Instruction)
-            argument0 = ((Instruction) args[0]).execute(start,end);
-        else
+//        if(args[0] instanceof Instruction)
+//            argument0 = ((Instruction) args[0]).execute(start,end);
+//        else
             argument0 = args[0];
         if(args[1] instanceof Instruction)
-            argument1 = ((Instruction) args[1]).execute(start,end);
+            argument1 = MemoryManager.memory[pc-1][1]/*OLD>>((Instruction) args[1]).execute(start,end)*/;
         else
             argument1 = args[1];
 
@@ -114,10 +109,11 @@ public class Instruction {
         }
         Kernel.writeToDisk( data.toString(), filename.toString());
     }
-    private String readFile(int start, int end){
+    private void readFile(int start, int end, int pc){
         Object argument0;
         if(args[0] instanceof Instruction)
-            argument0 = ((Instruction) args[0]).execute(start,end);
+            //although yasmine said this won't happen
+            argument0 = MemoryManager.memory[pc-1][1]/*OLD>>((Instruction) args[0]).execute(start,end)*/;
         else
             argument0 = args[0];
         //if arg is "input" --->   readFile input
@@ -127,7 +123,8 @@ public class Instruction {
         // System.out.println(args.length);
         // String s = argument0.toString();
 
-        return Kernel.readFromDisk(checkIfVar(argument0.toString(),start,end));
+//replace instruction with the actual value
+        MemoryManager.memory[pc][1] = Kernel.readFromDisk(checkIfVar(argument0.toString(),start,end));
     }
     private String checkIfVar(String string, int start, int end) {
        Object r =  Kernel.readFromMemory(string, start+5,start+7);
@@ -166,7 +163,7 @@ public class Instruction {
         for ( Object o : args) {
             ret.append(o.toString()).append(", ");
         }
-        return ret.substring(0, ret.length() - 2).concat(" )");
+        return (ret.charAt(ret.length()-2) != '(')? ret.substring(0, ret.length() - 2).concat(" )"): ret.toString().concat(")");
         //return type + "( " + String.join(" ", args.toString()) + " )";
     }
 }
