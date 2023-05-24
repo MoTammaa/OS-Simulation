@@ -37,21 +37,28 @@ public class Process implements Comparable<Process>{
 
         int one =(int) MemoryManager.memory[0][1];
         int pc = pcb.getProgramCounter();
+
         pcb.setProgramCounter(pc+1);
 
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
-        System.out.println("Executing Instruction (process>'" + pcb.processID  +"'):  => "+ (instruction == null?"null": instruction.toString()));
-        if(instruction.toString().equals("semSignal( userInput )")){
+
+        System.out.print("Executing Instruction (process>'" + pcb.processID  +"'):  => "+ (instruction == null?"null": instruction.toString()));
+
+        if(instruction != null && (instruction.type == InstType.input || instruction.type == InstType.readFile)){
+            System.out.println("  /------> HINT::::[next instruction]:::: " + InstructionParser.parseInstruction((String) MemoryManager.memory[pc+1][1]));
+        } else System.out.println();
+
+        if(instruction != null && instruction.toString().equals("semSignal( userInput )")){
             System.out.println("here");
         }
          
         if(id == one){
             MemoryManager.memory[2][1] = pcb.getProgramCounter();
-            instruction.execute(0 , 19);
+            instruction.execute(0 , 19, pcb.getProgramCounter() - 1);
         }
         else{
              MemoryManager.memory[22][1] = pcb.getProgramCounter();
-            instruction.execute(20 , 39);
+            instruction.execute(20 , 39, pcb.getProgramCounter() - 1);
         }
 
 		
@@ -69,10 +76,6 @@ public class Process implements Comparable<Process>{
             || MemoryManager.memory[pcb.getProgramCounter()][0] == null;
 		
 	}
-
-
-
-
 
 
 

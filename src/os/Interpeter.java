@@ -2,12 +2,8 @@ package os;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import javax.management.RuntimeErrorException;
-
-import os.MemoryManager;
 public class Interpeter {
     static int lastID = 1 ;
     public Interpeter(String filename) {
@@ -60,10 +56,20 @@ public class Interpeter {
 
         return null;
     }
-    public void textToProcess (ArrayList<String> lines ){
-          int memoryStart=-1,memoryEnd=-1;
-         Object [][] memory = MemoryManager.memory;
+    // public void textToProcess (ArrayList<String> lines ){
+    //       int memoryStart=-1,memoryEnd=-1;
+    //      Object [][] memory = MemoryManager.memory;
      
+    //   if(memory[0][1] == null){
+    //             memoryStart = 0;
+    //             memoryEnd = 19;
+    //             MemoryManager.clearMemory(memoryStart, memoryEnd);
+    //          //   return;
+
+    public void textToProcess(ArrayList<String> lines) {
+        int memoryStart=-1,memoryEnd=-1;
+         Object [][] memory = MemoryManager.memory;
+
       if(memory[0][1] == null){
                 memoryStart = 0;
                 memoryEnd = 19;
@@ -90,11 +96,42 @@ public class Interpeter {
     }
 // Write in Memory and add to the ready queue
     ProcessControlBlock pcb = new ProcessControlBlock(lastID,8,memoryStart,memoryEnd);
+    
+    preprocessLinesToExtractInnerInstr(lines);
+
     writeProcessToMem(memoryStart, memoryEnd, pcb, lines);
     OS.addToReadyQueue(lastID);
 
-        
+
+}
+
+    private void preprocessLinesToExtractInnerInstr(ArrayList<String> lines) {
+        int length = lines.size();
+
+        for (int i = 0; i < length; i++) {
+            Instruction instruction = InstructionParser.parseInstruction(lines.get(i));
+            if (instruction != null) {
+                if(instruction.args.length > 0 ){
+                    Object []args = instruction.args;
+                    for (int j = 0; j < args.length; j++) {
+                        if(args[j] instanceof Instruction) {
+                            length++;
+                            Instruction inner = (Instruction) args[j];
+                            if (inner.type == InstType.input){
+                                lines.add( i , "input");
+                                i++;
+                            } else if (inner.type == InstType.readFile) {
+                                lines.add( i , "readFile "+ inner.args[0]);
+                                i++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+
     public static void printMemory(){
         Object [][] memory = MemoryManager.memory;
         for(int i = 0 ; i < 40 ; i++){
