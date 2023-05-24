@@ -1,4 +1,4 @@
-processID 1
+processID 3
 processState READY
 programCounter 8
 startMemoryBoundary 0
@@ -8,34 +8,13 @@ null null
 null null
 Instruction0 semWait userInput
 Instruction1 assign a input
-Instruction2 assign b input
-Instruction3 semSignal userInput
-Instruction4 semWait userOutput
-Instruction5 printFromTo a b
-Instruction6 semSignal userOutput
-null null
-null null
-null null
-null null
-null null
-
-processID 1
-processState READY
-programCounter 8
-startMemoryBoundary 0
-endMemoryBoundary 19
-null null
-null null
-null null
-Instruction0 semWait userInput
-Instruction1 assign a input
-Instruction2 assign b input
-Instruction3 semSignal userInput
-Instruction4 semWait userOutput
-Instruction5 printFromTo a b
-Instruction6 semSignal userOutput
-null null
-null null
+Instruction2 semSignal userInput
+Instruction3 semWait file
+Instruction4 assign b readFile a
+Instruction5 semSignal file
+Instruction6 semWait userOutput
+Instruction7 print b
+Instruction8 semSignal userOutput
 null null
 null null
 null null

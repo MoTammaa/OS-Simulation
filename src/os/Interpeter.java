@@ -12,7 +12,7 @@ public class Interpeter {
     static int lastID = 1 ;
     public Interpeter(String filename) {
 
-        textToProcess(readFile(filename));
+        addProgram(filename);
         if(lastID == 1){
             Scheduler s = new Scheduler();
             s.startSchedule();
@@ -20,19 +20,26 @@ public class Interpeter {
         lastID++;
     }
 
+    private void addProgram(String filename) {
+        textToProcess(readFile(filename));
+    }
+
     public Interpeter(String filename1 , String filename2) {
         boolean start = false;
-        textToProcess(readFile(filename1));
+        addProgram(filename1);
         if(lastID == 1){
            start = true;
         }
         lastID++;
-        textToProcess(readFile(filename2));
+        addProgram(filename2);
         if(start){
             Scheduler s = new Scheduler();
             s.startSchedule();
         }
         lastID++;
+    }
+
+    public Interpeter() {
     }
 
     public ArrayList<String> readFile(String fileName) {
@@ -58,34 +65,33 @@ public class Interpeter {
          Object [][] memory = MemoryManager.memory;
      
       if(memory[0][1] == null){
-                 memoryStart = 0;
-                 memoryEnd = 19;
+                memoryStart = 0;
+                memoryEnd = 19;
+                MemoryManager.clearMemory(memoryStart, memoryEnd);
+             //   return;
 
             }
     else if(memory[20][1] == null){
                 memoryStart = 20;
                 memoryEnd = 39;
+                MemoryManager.clearMemory(memoryStart, memoryEnd);
+              //  return;
             }
     else{
        if(((State)memory[1][1]).equals( State.RUNNING)){
             memoryStart = 20;
             memoryEnd = 39;
          }
-          if(((State)memory[21][1]).equals( State.RUNNING)){
+          else{
             memoryStart = 0;
             memoryEnd = 19;
        }
        MemoryManager.freeMemory(memoryStart,memoryEnd);
     }
 // Write in Memory and add to the ready queue
-
-
-
-
-  ProcessControlBlock pcb = new ProcessControlBlock(lastID,8,memoryStart,memoryEnd);
-  
-  writeProcessToMem(memoryStart, memoryEnd, pcb, lines);
-  OS.addToReadyQueue(lastID);
+    ProcessControlBlock pcb = new ProcessControlBlock(lastID,8,memoryStart,memoryEnd);
+    writeProcessToMem(memoryStart, memoryEnd, pcb, lines);
+    OS.addToReadyQueue(lastID);
 
         
     }
@@ -137,12 +143,13 @@ public class Interpeter {
         }
        
 
-        if(!lines.isEmpty()){
-            throw new RuntimeException("Not enough memory to store the process");
-        }
+        // if(!lines.isEmpty()){
+        //     throw new RuntimeException("Not enough memory to store the process");
+        // }
 
 
 
     }
+    
 
 }

@@ -2,6 +2,7 @@ package os;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -100,24 +101,38 @@ public class Scheduler {
 		for(int i = 0; i<lines.length;i++) {
 			String [] attributes = lines[i].split(" ");
 			if(attributes[0].equals("processID")){
-				int y =  Integer.parseInt(attributes[1]);
+				int y =  Integer.parseInt(attributes[1].substring(0, attributes[1].length()-1));
 				if (x==y){
 					int pid = y ;
-					State s = stringToState(lines[i+1].split(" ")[1]);
-					int pc = Integer.parseInt(lines[i+2].split(" ")[1]);
-					int start = Integer.parseInt(lines[i+3].split(" ")[1]);
-					int end = Integer.parseInt(lines[i+4].split(" ")[1]);
+					String one = lines[i+1].split(" ")[1];
+					one = one.substring(0, one.length()-1);
+					String two = lines[i+2].split(" ")[1];
+					two = two.substring(0, two.length()-1);
+					String three = lines[i+3].split(" ")[1];
+					three = three.substring(0, three.length()-1);
+					String four = lines[i+4].split(" ")[1];
+					four = four.substring(0, four.length()-1);
+					String five = lines[i+5].split(" ")[1];
+					five = five.substring(0, five.length()-1);
+					String six = lines[i+6].split(" ")[1];
+					six = six.substring(0, six.length()-1);
+					String seven = lines[i+7].split(" ")[1];
+					seven = seven.substring(0, seven.length()-1);
+					State s = stringToState(one);
+					int pc = Integer.parseInt(two);
+					int start = Integer.parseInt(three);
+					int end = Integer.parseInt(four);
 					String a = lines[i+5].split(" ")[0];
-					String aVal = lines[i+5].split(" ")[1];
+					String aVal = five;
 					String b = lines[i+6].split(" ")[0];
-					String bVal = lines[i+6].split(" ")[1];
+					String bVal =six;
 					String c = lines[i+7].split(" ")[0];
-					String cVal = lines[i+7].split(" ")[1];
+					String cVal = seven;
 					ArrayList<String> vars = new ArrayList<>();
-					ArrayList <String> names = new ArrayList<>(); 
+				//	ArrayList <String> names = new ArrayList<>(); 
 					for(int j =8;j<20;j++){
 						if( (i+j)<=lines.length-1  &&   !lines[i+j].split(" ")[0].equals("processID")){
-							names.add(lines[i+j].split(" ")[0]);
+							//names.add(lines[i+j].split(" ")[0]);
 							vars.add(lines[i+j].split(" ")[1]);
 						}
 					}
@@ -132,10 +147,44 @@ public class Scheduler {
 					System.out.println("bVal : "+bVal);
 					System.out.println("c : "+c);
 					System.out.println("cVal : "+cVal);
-					System.out.println("vars : "+vars);
-					System.out.println("names : "+names);
+					//System.out.println("vars : "+vars);
+					//System.out.println("names : "+names);
+
+
+
+					int memoryStart=-1,memoryEnd=-1;
+					Object [][] memory = MemoryManager.memory;
+				
+					if(memory[0][1] == null){
+							memoryStart = 0;
+							memoryEnd = 19;
+							MemoryManager.clearMemory(memoryStart, memoryEnd);
+						//   return;
+
+						}
+					else if(memory[20][1] == null){
+							memoryStart = 20;
+							memoryEnd = 39;
+							MemoryManager.clearMemory(memoryStart, memoryEnd);
+						//  return;
+						}
+					else{
+					if(((State)memory[1][1]).equals( State.RUNNING)){
+						memoryStart = 20;
+						memoryEnd = 39;
+					}
+					else{
+						memoryStart = 0;
+						memoryEnd = 19;
+					}
+					MemoryManager.freeMemory(memoryStart,memoryEnd);
+					}
+					ProcessControlBlock pcb = new ProcessControlBlock(pid, s, pc, start, end);
+					Interpeter.writeProcessToMem(memoryStart, end, pcb, vars);
+
+
 					
-					return new Process(new ProcessControlBlock(pid, s, pc, start, end));
+					return new Process(pcb);
 				}
 			}
 		}
@@ -153,13 +202,38 @@ public class Scheduler {
         return null;
     }
 
-    public static void main(String [] args) {
-		Queue q =  new LinkedList<>();
-		q.add(2);
-		q.add("test");
-		q.remove();
-		System.out.print(q);
-		
-	}
+    public static void main( String[] args) {
+         OS os = new OS();
+
+         Kernel kernel = new Kernel();
+
+        MemoryManager memoryManager = new MemoryManager();
+        Interpeter i = new Interpeter();
+    
+        System.out.println("--------------------------------------------------");
+        i.textToProcess(i.readFile("Program_1.txt"));
+		i.lastID++;
+		i.textToProcess(i.readFile("Program_2.txt"));
+		i.lastID++;
+		i.textToProcess(i.readFile("Program_3.txt"));
+        i.printMemory();
+        System.out.println("--------------------------------------------------");
+		System.out.println(Kernel.readFromDisk("hardDisk.txt"));
+		System.out.println("--------------------------------------------------");
+		System.out.println("--------------------------------------------------");
+		System.out.println("--------------------------------------------------");
+		Scheduler s = new Scheduler();
+		Process p = s.goGetItFromHD(1);
+
+
+
+
+		 i.printMemory();
+        System.out.println("--------------------------------------------------");
+		System.out.println(Kernel.readFromDisk("hardDisk.txt"));
+		// MemoryManager.freeMemory(0, 19);
+		//System.out.println(Kernel.readFromDisk("hardDisk.txt"));
+    }
+
 		
 }

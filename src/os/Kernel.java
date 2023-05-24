@@ -45,6 +45,16 @@ public class Kernel {
         e.printStackTrace();
     }
 }
+public static void overrideDisk(String text, String filename) {
+		if(!filename.endsWith(".txt")) filename =  filename.concat(".txt");
+    try {
+        FileWriter fw = new FileWriter(filename);
+        fw.write(text + "\n"); // add newline character
+        fw.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
     public static void print(Object obj) {
 		System.out.println(obj);
