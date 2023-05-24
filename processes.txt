@@ -1,0 +1,15 @@
+Program_1.txt
+0
+
+Program_2.txt
+4
+
+Program_3.txt
+2
+
+HALT
+
+
+
+//  'filename.txt'  ==> representing process
+//  timing of entrance or arrival to OS

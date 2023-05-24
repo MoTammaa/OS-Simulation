@@ -9,10 +9,10 @@ public class Interpeter {
     public Interpeter(String filename) {
 
         addProgram(filename);
-        if(lastID == 1){
-            Scheduler s = new Scheduler();
-            s.startSchedule();
-        }
+//        if(lastID == 1){
+//            Scheduler s = new Scheduler();
+//            s.startSchedule();
+//        }
         lastID++;
     }
 

@@ -7,15 +7,15 @@ null null
 null null
 null null
 Instruction0 semWait userInput
-Instruction1 assign a input
-Instruction2 semSignal userInput
-Instruction3 semWait file
-Instruction4 assign b readFile a
-Instruction5 semSignal file
-Instruction6 semWait userOutput
-Instruction7 print b
-Instruction8 semSignal userOutput
-null null
-null null
+Instruction1 input
+Instruction2 assign a input
+Instruction3 semSignal userInput
+Instruction4 semWait file
+Instruction5 readFile a
+Instruction6 assign b readFile a
+Instruction7 semSignal file
+Instruction8 semWait userOutput
+Instruction9 print b
+Instruction10 semSignal userOutput
 null null
 
