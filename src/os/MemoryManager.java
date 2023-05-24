@@ -95,9 +95,15 @@ public class MemoryManager {
             memory[i][1] = null;
 
         }
-         Kernel.writeToDisk(text, "hardDisk.txt");
+         Kernel.overrideDisk(text, "hardDisk.txt");
        
     }
+    public static void clearMemory(int start, int end) {
+    for (int i = start; i <= end; i++) {
+        memory[i][0] = null;
+        memory[i][1] = null;
+    }
+}
 
     public void swapProcessToDisk(Process process) {
         process.getPcb().setProcessState(State.READY);
