@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Interpreter {
+public class Interpeter {
     static int lastID = 1 ;
-    public Interpreter(String filename) {
+    public Interpeter(String filename) {
 
         textToProcess(readFile(filename));
         if(lastID == 1){
@@ -16,7 +16,7 @@ public class Interpreter {
         lastID++;
     }
 
-    public Interpreter(String filename1 , String filename2) {
+    public Interpeter(String filename1 , String filename2) {
         boolean start = false;
         textToProcess(readFile(filename1));
         if(lastID == 1){
