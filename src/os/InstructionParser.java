@@ -2,6 +2,9 @@ package os;
 
 public class InstructionParser {
     public static  Instruction parseInstruction(String instruction) {
+        if(instruction.endsWith(" ") || instruction.endsWith("\n") || instruction.endsWith("\r") || instruction.endsWith("\t") || instruction.endsWith("\f") || instruction.endsWith("\b")){
+            instruction = instruction.substring(0,instruction.length()-1);
+        }
         String[] tokens = instruction.split(" ");
         String type = tokens[0];
 
@@ -72,11 +75,23 @@ public class InstructionParser {
 
             case "semWait":
                 Object[] args7 = new Object[1];
+                if(tokens.length == 1){
+                    System.out.println("here");
+                    System.out.println(tokens[0]);
+                    Interpeter.printMemory();
+
+                }
+                if(tokens[1].endsWith(" ")||tokens[1].endsWith("\n")||tokens[1].endsWith("\r")||tokens[1].endsWith("\t")){
+                    tokens[1] = tokens[1].substring(0,tokens[1].length()-1);
+                }
                 args7[0] = tokens[1];
                 return new Instruction(InstType.semWait, args7);
 
             case "semSignal":
                 Object[] args6 = new Object[1];
+                if(tokens[1].endsWith(" ")||tokens[1].endsWith("\n")||tokens[1].endsWith("\r")||tokens[1].endsWith("\t")){
+                    tokens[1] = tokens[1].substring(0,tokens[1].length()-1);
+                }
                 args6[0] = tokens[1];
                 return new Instruction(InstType.semSignal, args6);
 

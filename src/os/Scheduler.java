@@ -1,26 +1,40 @@
 package os;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.*;
 
 public class Scheduler {
 	
-	private static int timeSlice = 0;
+	private static int timeCycle = 0;
+	private int proccessEntered =0, MAX_PROCESSES = 3;
+
+	private PriorityQueue<Pair> processTiming;
 
 	public Scheduler() {
-		
+		goGetProcessEntranceTimingCycle();
 	}
 	
 	public void startSchedule() {
-		while(OS.getReadyQueue().size()>0) {
+		while(proccessEntered < MAX_PROCESSES || OS.getReadyQueue().size() > 0) {
 			System.out.println("\n************************************");
-			System.out.println("------------------We are in the scheduler Time Slice: "+timeSlice++);
+			System.out.println("------------------We are in the scheduler Time Slice: "+ timeCycle++);
+			if(timeCycle == 11){
+				System.out.println("Time Slice 10 reached");
+				
+			}
+			if( !checkForNewProcesses()){
+				if(OS.getReadyQueue().size() == 0) {
+					System.out.println("\nNO Process Currently in the Kernel!!");
+					continue;
+				}
+			}
+
 			int x = OS.getReadyQueue().remove();
 			// execute 2 instructions
 			Process p  = getPBID(x);
+			cleanTheMEM();
 			p.getPcb().setProcessState(State.RUNNING);
 			p.executeNextInstruction();
 			if(OS.isBlocked(p.getPcb().getProcessID())) {
@@ -59,6 +73,65 @@ public class Scheduler {
 
 		}			
 	}
+
+	private void cleanTheMEM() {
+		// System.out.println("MEM BEFORE CLEANING : " );
+		// System.out.println();
+		// Interpeter.printMemory();
+		Object[][] mem = MemoryManager.memory;
+		for(int i = 0; i < 20; i++) {
+			if(mem[i][0] instanceof String){
+				String s = (String) mem[i][0];
+				if(s.endsWith(" ") || s.endsWith("\n") || s.endsWith("\t") || s.endsWith("\r")){
+					mem[i][0] = s.substring(0, s.length()-1);
+
+				}
+			}
+			if(mem[i][1] instanceof String){
+				String s= (String) mem[i][1];
+				if(s.endsWith(" ") || s.endsWith("\n") || s.endsWith("\t") || s.endsWith("\r")){
+					mem[i][1] = s.substring(0, s.length()-1);
+
+				}
+			}
+		}
+		// System.out.println("MEM After CLEANING : " );
+		// System.out.println();
+		// Interpeter.printMemory();
+	}
+
+	private boolean checkForNewProcesses(){
+		if(processTiming == null || processTiming.size() == 0 ) return false;
+		// System.out.println(processTiming.peek().cycle);
+		// System.out.println(processTiming.toString());
+		if(processTiming.peek().cycle == timeCycle-1) {
+			Interpeter in = new Interpeter(processTiming.poll().program);
+			proccessEntered++;
+			return true;
+		}
+
+		return false;
+	}
+
+	private void goGetProcessEntranceTimingCycle() {
+		processTiming = new PriorityQueue<Pair>();
+
+		BufferedReader br;
+		try{
+			br = new BufferedReader(new java.io.FileReader("processes.txt"));
+			String line;
+			while((line = br.readLine()) != null){
+				if(line.length() == 0) continue;
+				if(line.equalsIgnoreCase("HALT") || line.equalsIgnoreCase("EXIT")) break;
+				// else kol 7aga tamam
+				Pair p = new Pair( Integer.parseInt( br.readLine()), line);
+				processTiming.add(p);
+			}
+			br.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Processes File error!");
+		}
+	}
 	
 	private Process getPBID(int x) {
 		Object [] [] mem = MemoryManager.memory;
@@ -78,23 +151,26 @@ public class Scheduler {
 			int end = (int) mem[24][1];
 			return new Process(new ProcessControlBlock(pid, s, pc, start, end));
 		}
-
-		return goGetItFromHD(x);
+		Interpeter.printMemory();
+		Process p = goGetItFromHD(x);
+		Interpeter.printMemory();
+		return p;
 	}
 	//PCB
-// 1- int processID ;
-// 2-	State state ; 
-// 3-	int pc ;
-// 4-	int startBoundary ;
-// 5- int endBoundary ;
-// 6- var 1
-// 7- var 2
-// 8- var 3
-// 9- instruction 1 ...
+// 0- int processID ;
+// 1-	State state ;
+// 2-	int pc ;
+// 3-	int startBoundary ;
+// 4- int endBoundary ;
+// 5- var 1
+// 6- var 2
+// 7- var 3
+// 8- instruction 1 ...
 
 
 	private Process goGetItFromHD(int x) {
 		String hd =  Kernel.readFromDisk("hardDisk.txt");
+		System.out.println(hd);
 		//text += (memory[i][0]+"") + " " + (memory[i][1]+"") + "\n";
 		String [] lines = hd.split("\n");
 		for(int i = 0; i<lines.length;i++) {
@@ -128,11 +204,18 @@ public class Scheduler {
 					String c = lines[i+7].split(" ")[0];
 					String cVal = seven;
 					ArrayList<String> vars = new ArrayList<>();
-				//	ArrayList <String> names = new ArrayList<>(); 
+					ArrayList <String> names = new ArrayList<>(); 
 					for(int j =8;j<20;j++){
 						if( (i+j)<=lines.length-1  &&   !lines[i+j].split(" ")[0].equals("processID")){
-							//names.add(lines[i+j].split(" ")[0]);
-							vars.add(lines[i+j].split(" ")[1]);
+							names.add(lines[i+j].split(" ")[0]);
+							String l = "";
+							for(int k = 1;k<lines[i+j].split(" ").length-1;k++){
+								l+=lines[i+j].split(" ")[k]+" ";
+								
+							}
+							l+=lines[i+j].split(" ")[lines[i+j].split(" ").length-1];
+							vars.add(l);
+							
 						}
 					}
 					System.out.println("pid : "+pid);
@@ -146,8 +229,8 @@ public class Scheduler {
 					System.out.println("bVal : "+bVal);
 					System.out.println("c : "+c);
 					System.out.println("cVal : "+cVal);
-					//System.out.println("vars : "+vars);
-					//System.out.println("names : "+names);
+					System.out.println("vars : "+vars);
+					System.out.println("names : "+names);
 
 
 
@@ -180,6 +263,12 @@ public class Scheduler {
 					}
 					ProcessControlBlock pcb = new ProcessControlBlock(pid, s, pc, start, end);
 					Interpeter.writeProcessToMem(memoryStart, end, pcb, vars);
+					MemoryManager.memory[memoryStart+5][0]=a;
+					MemoryManager.memory[memoryStart+5][1]=aVal;
+					MemoryManager.memory[memoryStart+6][0]=b;
+					MemoryManager.memory[memoryStart+6][1]=bVal;
+					MemoryManager.memory[memoryStart+7][0]=c;
+					MemoryManager.memory[memoryStart+7][1]=cVal;
 
 
 					
@@ -234,5 +323,27 @@ public class Scheduler {
 		//System.out.println(Kernel.readFromDisk("hardDisk.txt"));
     }
 
+
+
+
+	static class Pair implements Comparable<Pair>{
+		int cycle;
+		String program;
+
+		public Pair(int cycle, String filenameProg){
+			this.cycle = cycle;
+			program = filenameProg.endsWith(".txt")? filenameProg : filenameProg + ".txt";
+		}
+
+		@Override
+		public int compareTo(Pair o) {
+			return this.cycle - o.cycle;
+		}
+
+		@Override
+		public String toString() {
+			return "Pair [cycle=" + cycle + ", program=" + program + "]";
+		}
 		
+	}
 }

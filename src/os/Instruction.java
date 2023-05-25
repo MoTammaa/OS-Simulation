@@ -48,11 +48,20 @@ public class Instruction {
         Kernel.print(b);
     }
     private void printFromTo(int start, int end){
-        // System.out.println((String)args[0]+"    "+(String)args[1]);
-        String val1 = (String) Kernel.readFromMemory(   ((String)args[0])    , start, end);
+        System.out.println((String)args[0]+"    "+(String)args[1]);
+        String one = (String)args[0];
+        String two = (String)args[1];
+        if(one.endsWith(" ") || one.endsWith("\n") || one.endsWith("\t") || one.endsWith("\r")){
+            one = one.substring(0,one.length()-1);
+        }
+        if(two.endsWith(" ") || two.endsWith("\n") || two.endsWith("\t") || two.endsWith("\r")){
+            two = two.substring(0,two.length()-1);
+
+        }
+        String val1 = (String) Kernel.readFromMemory(   one    , start, end);
         //val1 = val1.substring(4,val1.length()-1);
 
-        String val2 = (String) Kernel.readFromMemory(   ((String)args[1])    , start, end);
+        String val2 = (String) Kernel.readFromMemory(   two    , start, end);
         //val2 = val2.substring(4,val2.length()-1);
         Kernel.printFromTo( Integer.parseInt(val1), Integer.parseInt(val2));
         // Kernel.printFromTo( Integer.parseInt(val1), Integer.parseInt(val2);
@@ -75,9 +84,23 @@ public class Instruction {
 //            argument0 = (Instruction)((Instruction) args[0]).execute(start,end);
 //        else
             argument0 = args[0];
-        if(args[1] instanceof Instruction)
+        if(args[1] instanceof Instruction){
+            Interpeter.printMemory();
             //get the data from input or readFile instruction just above me
-            argument1 = MemoryManager.memory[pc-1][1] /*OLD>>((Instruction) args[1]).execute(start,end)*/;
+            Instruction k = (Instruction) args[1];
+            System.out.println(k.toString());
+            for(int h = 0 ;h<k.args.length;h++){
+                System.out.println(k.args[h]);
+            }
+            if(k.type.equals(InstType.readFile)){
+                Object a = k.args[0];
+                argument1 = Kernel.readFromMemory(a.toString(),x, y);
+            }
+            else{
+                argument1 = MemoryManager.memory[pc-1][1] /*OLD>>((Instruction) args[1]).execute(start,end)*/;
+            }
+                
+        }
         else
             argument1 = args[1];
 

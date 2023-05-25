@@ -37,9 +37,13 @@ public class Process implements Comparable<Process>{
 
         int one =(int) MemoryManager.memory[0][1];
         int pc = pcb.getProgramCounter();
+        if(pcb.processID == 1 ){
+            System.out.println((String) MemoryManager.memory[pc][1]);
+        }
 
         pcb.setProgramCounter(pc+1);
-
+       // Interpeter.printMemory();
+        System.out.println("Intruction ::"+MemoryManager.memory[pc][1]);
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
 
         System.out.print("Executing Instruction (process>'" + pcb.processID  +"'):  => "+ (instruction == null?"null": instruction.toString()));
@@ -72,8 +76,28 @@ public class Process implements Comparable<Process>{
 	
 	public boolean isFinished() {
         //System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
+        if(pcb.getProcessID() == 1 && pcb.getProgramCounter() == 17){
+            Interpeter.printMemory();
+        }
+        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
+        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1] == null);
+        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1] instanceof String);
+        if(MemoryManager.memory[pcb.getProgramCounter()][1] instanceof String
+        &&( ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith(" ")
+        || ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith("\n")
+        || ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith("\r")
+        || ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith("\t")
+        )){
+            System.out.println("here");
+            String s = (String)MemoryManager.memory[pcb.getProgramCounter()][1];
+            MemoryManager.memory[pcb.getProgramCounter()][1] = s.substring(0, s.length()-1);
+        }
+            // READ THIS : why pc +1 ? 
+            //bec when he execute the instruction he increment the pc by 1 1st then excute the instruction at pc+1
+
         return pcb.getProgramCounter() > this.getPcb().getEndMemoryBoundary() 
-            || MemoryManager.memory[pcb.getProgramCounter()][0] == null;
+            || MemoryManager.memory[pcb.getProgramCounter()][1] == null
+            || MemoryManager.memory[pcb.getProgramCounter()][1].equals("null");
 		
 	}
 
