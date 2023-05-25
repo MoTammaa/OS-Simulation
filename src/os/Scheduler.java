@@ -10,13 +10,12 @@ public class Scheduler {
 	private static int timeCycle = 0;
 	private int proccessEntered =0, MAX_PROCESSES = 3;
 
+	private static final int MAX_INSTRUCTIONS_PER_SLICE = 3;
+
 	public static PriorityQueue<Pair> processTiming;
 
 	public Scheduler() {
 		goGetProcessEntranceTimingCycle();
-	}
-	public Scheduler(int fake) {
-		
 	}
 	
 	public void startSchedule() {
@@ -43,38 +42,29 @@ public class Scheduler {
 			p.executeNextInstruction();
 			if(OS.isBlocked(p.getPcb().getProcessID())) {
 				p.getPcb().setProcessState(State.BLOCKED);
-				// p.getPcb().setProgramCounter(p.getPcb().getProgramCounter()-1);
-				// if(p.getPcb().getStartMemoryBoundary() == 0){
-				// 	MemoryManager.memory[2][1] = p.getPcb().getProgramCounter();
-				// }
-				// else {
-				// 	MemoryManager.memory[22][1] = p.getPcb().getProgramCounter();
-				// }
+				System.out.println("## Process " + p.getPcb().getProcessID() + " is blocked over the requested resource ##");
 				continue;
 			}
-			
-			if(p.isFinished() == false) {
-				p.executeNextInstruction();
-				if(OS.isBlocked(p.getPcb().getProcessID())) {
-				p.getPcb().setProcessState(State.BLOCKED);
-				// p.getPcb().setProgramCounter(p.getPcb().getProgramCounter()-1);
-				// if(p.getPcb().getStartMemoryBoundary() == 0){
-				// 	MemoryManager.memory[2][1] = p.getPcb().getProgramCounter();
-				// }
-				// else {
-				// 	MemoryManager.memory[22][1] = p.getPcb().getProgramCounter();
-				// }
-				continue;
+			int instructionsExecuted = 1;
+			while (instructionsExecuted++ < MAX_INSTRUCTIONS_PER_SLICE && !p.isFinished()) {
+
+
+				if (p.isFinished() == false) {
+					p.executeNextInstruction();
+					if (OS.isBlocked(p.getPcb().getProcessID())) {
+						p.getPcb().setProcessState(State.BLOCKED);
+						System.out.println("## Process " + p.getPcb().getProcessID() + " is blocked over the requested resource ##");
+						continue;
+					}
+				}
+
 			}
-			}
-			if(p.isFinished() == false) {
+			if (p.isFinished() == false) {
 				OS.getReadyQueue().add(p.getPcb().getProcessID());
 				p.getPcb().setProcessState(State.READY);
-				
+
 
 			}
-
-
 		}			
 	}
 

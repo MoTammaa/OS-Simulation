@@ -77,28 +77,7 @@ public class OS {
     Kernel kernel = new Kernel();
     Kernel.clearOutputStream();
 
-    MemoryManager memoryManager = new MemoryManager();
-    Object [][] memory = memoryManager.memory;
-
-//    Interpeter interpeter = new Interpeter("Program_2.txt");
-   // interpeter = new Interpeter("Program_3.txt");
-    //interpeter = new Interpeter("Program_1.txt");
-  //  System.out.println("State of p1 alone : "+((String)memory[1][0])+" "+((State)memory[1][1]));
-
-  //  System.out.println("First Check:");
-   // System.out.println("Memory:"+memoryManager.memory);
-  //  System.out.println("Ready Queue:"+readyQueue);
-    //System.out.println("Ready Queue:"+readyQueue);
-    
-    // interpeter = new Interpeter("Program_2.txt");
-
-
-    //  System.out.println("State of p1  : "+((String)memory[1][0])+" "+((State)memory[1][1]));
-    //   System.out.println("State of p2 : "+((String)memory[21][0])+" "+((State)memory[21][1]));
-
-    // interpeter = new Interpeter("Program_3.txt");
-   // System.out.println(kernel.readFromDisk("hardDisk.txt"));
-       
+    Object [][] memory = MemoryManager.memory;
     
     
     Scheduler sch = new Scheduler();

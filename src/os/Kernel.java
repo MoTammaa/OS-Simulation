@@ -27,8 +27,7 @@ public class Kernel {
 			}
 			return sb.toString();
 		} catch (IOException e) {	
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException("Filename error! Check spelling and extension.");
 
 			
 		}

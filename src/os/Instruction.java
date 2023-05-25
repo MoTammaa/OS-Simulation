@@ -39,11 +39,8 @@ public class Instruction {
 
     private void print(int start, int end){
         String name = (String) args[0];
-        // name = name.substring(4, name.length() - 1);
-        // System.out.println("NAME : "+name);
-        // System.out.println("START : "+start+5);
-        // System.out.println("END : "+(end-12));
-        System.out.println("THE NAME : "+name);
+        // name = name.substring(4, name.length() - 1);// System.out.println("NAME : "+name);// System.out.println("START : "+start+5);// System.out.println("END : "+(end-12));
+        System.out.println("THE NAME OF var: "+name);
         Object b =  Kernel.readFromMemory(name, start+5, end-12);
         Kernel.print(b);
     }
@@ -92,13 +89,9 @@ public class Instruction {
             for(int h = 0 ;h<k.args.length;h++){
                 System.out.println(k.args[h]);
             }
-            if(k.type.equals(InstType.readFile)){
-                Object a = k.args[0];
-                argument1 = Kernel.readFromMemory(a.toString(),x, y);
-            }
-            else{
-                argument1 = MemoryManager.memory[pc-1][1] /*OLD>>((Instruction) args[1]).execute(start,end)*/;
-            }
+
+            argument1 = MemoryManager.memory[pc-1][1] /*OLD>>((Instruction) args[1]).execute(start,end)*/;
+
                 
         }
         else
