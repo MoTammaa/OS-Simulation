@@ -37,9 +37,12 @@ public class Process implements Comparable<Process>{
 
         int one =(int) MemoryManager.memory[0][1];
         int pc = pcb.getProgramCounter();
+        if(pcb.processID == 1 ){
+            System.out.println((String) MemoryManager.memory[pc][1]);
+        }
 
         pcb.setProgramCounter(pc+1);
-
+       // Interpeter.printMemory();
         System.out.println("Intruction ::"+MemoryManager.memory[pc][1]);
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
 
@@ -73,8 +76,16 @@ public class Process implements Comparable<Process>{
 	
 	public boolean isFinished() {
         //System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
+        // if(pcb.getProcessID() == 1 && pcb.getProgramCounter() == 16){
+        //     Interpeter.printMemory();
+        // }
+        
+
+            // READ THIS : why pc +1 ? 
+            //bec when he execute the instruction he increment the pc by 1 1st then excute the instruction at pc+1
+
         return pcb.getProgramCounter() > this.getPcb().getEndMemoryBoundary() 
-            || MemoryManager.memory[pcb.getProgramCounter()][0] == null;
+            || MemoryManager.memory[pcb.getProgramCounter()+1][1] == null;
 		
 	}
 

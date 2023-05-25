@@ -95,7 +95,8 @@ public class Interpeter {
        MemoryManager.freeMemory(memoryStart,memoryEnd);
     }
 // Write in Memory and add to the ready queue
-    ProcessControlBlock pcb = new ProcessControlBlock(lastID,8,memoryStart,memoryEnd);
+    int pc = 8+memoryStart;
+    ProcessControlBlock pcb = new ProcessControlBlock(lastID,pc,memoryStart,memoryEnd);
     
     preprocessLinesToExtractInnerInstr(lines);
 

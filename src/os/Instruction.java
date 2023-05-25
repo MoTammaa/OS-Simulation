@@ -48,11 +48,20 @@ public class Instruction {
         Kernel.print(b);
     }
     private void printFromTo(int start, int end){
-        // System.out.println((String)args[0]+"    "+(String)args[1]);
-        String val1 = (String) Kernel.readFromMemory(   ((String)args[0])    , start, end);
+        System.out.println((String)args[0]+"    "+(String)args[1]);
+        String one = (String)args[0];
+        String two = (String)args[1];
+        if(one.endsWith(" ") || one.endsWith("\n") || one.endsWith("\t") || one.endsWith("\r")){
+            one = one.substring(0,one.length()-1);
+        }
+        if(two.endsWith(" ") || two.endsWith("\n") || two.endsWith("\t") || two.endsWith("\r")){
+            two = two.substring(0,two.length()-1);
+
+        }
+        String val1 = (String) Kernel.readFromMemory(   one    , start, end);
         //val1 = val1.substring(4,val1.length()-1);
 
-        String val2 = (String) Kernel.readFromMemory(   ((String)args[1])    , start, end);
+        String val2 = (String) Kernel.readFromMemory(   two    , start, end);
         //val2 = val2.substring(4,val2.length()-1);
         Kernel.printFromTo( Integer.parseInt(val1), Integer.parseInt(val2));
         // Kernel.printFromTo( Integer.parseInt(val1), Integer.parseInt(val2);

@@ -17,7 +17,7 @@ public class Scheduler {
 	}
 	
 	public void startSchedule() {
-		while(proccessEntered < MAX_PROCESSES) {
+		while(proccessEntered < MAX_PROCESSES || OS.getReadyQueue().size() > 0) {
 			System.out.println("\n************************************");
 			System.out.println("------------------We are in the scheduler Time Slice: "+ timeCycle++);
 			if( !checkForNewProcesses()){
@@ -71,7 +71,8 @@ public class Scheduler {
 
 	private boolean checkForNewProcesses(){
 		if(processTiming == null || processTiming.size() == 0 ) return false;
-
+		// System.out.println(processTiming.peek().cycle);
+		// System.out.println(processTiming.toString());
 		if(processTiming.peek().cycle == timeCycle-1) {
 			Interpeter in = new Interpeter(processTiming.poll().program);
 			proccessEntered++;
@@ -119,8 +120,10 @@ public class Scheduler {
 			int end = (int) mem[24][1];
 			return new Process(new ProcessControlBlock(pid, s, pc, start, end));
 		}
-
-		return goGetItFromHD(x);
+		Interpeter.printMemory();
+		Process p = goGetItFromHD(x);
+		Interpeter.printMemory();
+		return p;
 	}
 	//PCB
 // 0- int processID ;
@@ -136,6 +139,7 @@ public class Scheduler {
 
 	private Process goGetItFromHD(int x) {
 		String hd =  Kernel.readFromDisk("hardDisk.txt");
+		System.out.println(hd);
 		//text += (memory[i][0]+"") + " " + (memory[i][1]+"") + "\n";
 		String [] lines = hd.split("\n");
 		for(int i = 0; i<lines.length;i++) {
@@ -169,11 +173,18 @@ public class Scheduler {
 					String c = lines[i+7].split(" ")[0];
 					String cVal = seven;
 					ArrayList<String> vars = new ArrayList<>();
-				//	ArrayList <String> names = new ArrayList<>(); 
+					ArrayList <String> names = new ArrayList<>(); 
 					for(int j =8;j<20;j++){
 						if( (i+j)<=lines.length-1  &&   !lines[i+j].split(" ")[0].equals("processID")){
-							//names.add(lines[i+j].split(" ")[0]);
-							vars.add(lines[i+j].split(" ")[1]);
+							names.add(lines[i+j].split(" ")[0]);
+							String l = "";
+							for(int k = 1;k<lines[i+j].split(" ").length-1;k++){
+								l+=lines[i+j].split(" ")[k]+" ";
+								
+							}
+							l+=lines[i+j].split(" ")[lines[i+j].split(" ").length-1];
+							vars.add(l);
+							
 						}
 					}
 					System.out.println("pid : "+pid);
@@ -187,8 +198,8 @@ public class Scheduler {
 					System.out.println("bVal : "+bVal);
 					System.out.println("c : "+c);
 					System.out.println("cVal : "+cVal);
-					//System.out.println("vars : "+vars);
-					//System.out.println("names : "+names);
+					System.out.println("vars : "+vars);
+					System.out.println("names : "+names);
 
 
 
@@ -221,6 +232,12 @@ public class Scheduler {
 					}
 					ProcessControlBlock pcb = new ProcessControlBlock(pid, s, pc, start, end);
 					Interpeter.writeProcessToMem(memoryStart, end, pcb, vars);
+					MemoryManager.memory[memoryStart+5][0]=a;
+					MemoryManager.memory[memoryStart+5][1]=aVal;
+					MemoryManager.memory[memoryStart+6][0]=b;
+					MemoryManager.memory[memoryStart+6][1]=bVal;
+					MemoryManager.memory[memoryStart+7][0]=c;
+					MemoryManager.memory[memoryStart+7][1]=cVal;
 
 
 					
@@ -291,5 +308,11 @@ public class Scheduler {
 		public int compareTo(Pair o) {
 			return this.cycle - o.cycle;
 		}
+
+		@Override
+		public String toString() {
+			return "Pair [cycle=" + cycle + ", program=" + program + "]";
+		}
+		
 	}
 }
