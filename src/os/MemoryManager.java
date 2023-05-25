@@ -86,7 +86,26 @@ public class MemoryManager {
 
     public static void freeMemory(int start,int end) {
        String text = "";
+        for(int h = 0 ;h<MemoryManager.memory.length;h++){
 
+            if(MemoryManager.memory[h][1] instanceof String){
+                String s = (String)MemoryManager.memory[h][1];
+                if(s.endsWith(" ") || s.endsWith("\n") || s.endsWith("\t") ||
+                 s.endsWith("\r") || s.endsWith("\f") || s.endsWith("\b") ){
+                    MemoryManager.memory[h][1] = s.substring(0,s.length()-1);
+                }
+            }
+
+            if(      MemoryManager.memory[h][1] == null  ||    MemoryManager.memory[h][1].equals("null")   ){
+                MemoryManager.memory[h][0] = null;
+                MemoryManager.memory[h][1] = null;
+            }
+            
+            /*if(mem[i][1] == null){
+				mem[i][0] = null;
+			} */
+
+        }
         // fady makn w sheel el process(es) w 7ot mkanhom null
         for (int i = start; i <= end; i++) {
             text += (memory[i][0]+"") + " " + (memory[i][1]+"") + "\n";

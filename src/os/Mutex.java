@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public abstract class Mutex{
 
-    private Queue<Integer> blockedQueue;
+   
 
     private boolean islocked;
     private int processID;
@@ -23,12 +23,8 @@ public abstract class Mutex{
 
 
 
-    public Queue<Integer> getBlockedQueue() {
-        return blockedQueue;
-    }
-    public void setBlockedQueue(Queue<Integer> blockedQueue) {
-        this.blockedQueue = blockedQueue;
-    }
+   abstract public  Queue<Integer> getBlockedQueue() ;
+    abstract public  void setBlockedQueue(Queue<Integer> blockedQueue) ;
     public boolean isIslocked() {
         return islocked;
     }
@@ -37,14 +33,17 @@ public abstract class Mutex{
     }
     public Mutex() {
         //why there is error here
-        this.blockedQueue = new LinkedList<Integer>();
+        // if(this.getBlockedQueue() == null){
+        //     this.setBlockedQueue(  new LinkedList<Integer>());
+        // }
+        
         this.islocked = false;
         this.processID = -1;
     }
 
     public void semWait(int pid){
         if(  islocked ){
-            blockedQueue.add(pid);
+            this.getBlockedQueue().add(pid);
             OS.addToBlockedQueue(pid);
             
         }
@@ -56,14 +55,14 @@ public abstract class Mutex{
     }
     public void semSignal(int pid){
         if(processID == pid){
-            if(blockedQueue.isEmpty()){
+            if(this.getBlockedQueue().isEmpty()){
                 islocked = false;
                 processID = -1;
             }
             else{
-                processID = blockedQueue.poll();
+                processID = this.getBlockedQueue().poll();
                 OS.removeFromBlockedQueue(processID);
-                blockedQueue.remove(processID);
+                this.getBlockedQueue().remove(processID);
                 changeProcessState(processID);
                 OS.addToReadyQueue(processID);
             }
@@ -83,7 +82,7 @@ public abstract class Mutex{
     public  void printMutex(){
 
         System.out.println("Mutex is locked: " + this.islocked);
-        System.out.println("Mutex blocked queue: " + this.blockedQueue);
+        System.out.println("Mutex blocked queue: " + this.getBlockedQueue());
         if(processID == -1){
             System.out.println("Mutex process: " + "null");
             return;   
@@ -93,29 +92,7 @@ public abstract class Mutex{
 
     }
     
-public static void main(String[] args) {
-    Mutex mutex = new InputMutex();
-   
-    mutex.printMutex();
-    System.out.println();
-    mutex.semWait(1);
-    mutex.printMutex();
-    System.out.println();
-    mutex.semWait(2);
-    mutex.printMutex();
-    System.out.println();
-    mutex.semWait(3);
-    mutex.printMutex();
-    System.out.println();
-    mutex.semSignal(1);
-    mutex.printMutex();
-    System.out.println();
-    mutex.semSignal(2);
-    mutex.printMutex();
-    System.out.println();
-    mutex.semSignal(3);
-    mutex.printMutex();
-}
+
 
 
     

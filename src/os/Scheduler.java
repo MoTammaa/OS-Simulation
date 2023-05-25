@@ -10,20 +10,24 @@ public class Scheduler {
 	private static int timeCycle = 0;
 	private int proccessEntered =0, MAX_PROCESSES = 3;
 
-	private PriorityQueue<Pair> processTiming;
+	public static PriorityQueue<Pair> processTiming;
 
 	public Scheduler() {
 		goGetProcessEntranceTimingCycle();
+	}
+	public Scheduler(int fake) {
+		
 	}
 	
 	public void startSchedule() {
 		while(proccessEntered < MAX_PROCESSES || OS.getReadyQueue().size() > 0) {
 			System.out.println("\n************************************");
 			System.out.println("------------------We are in the scheduler Time Slice: "+ timeCycle++);
-			if(timeCycle == 11){
-				System.out.println("Time Slice 10 reached");
+			cleanTheMEM();
+			// if(timeCycle == 11){
+			// 	System.out.println("Time Slice 10 reached");
 				
-			}
+			// }
 			if( !checkForNewProcesses()){
 				if(OS.getReadyQueue().size() == 0) {
 					System.out.println("\nNO Process Currently in the Kernel!!");
@@ -94,6 +98,9 @@ public class Scheduler {
 
 				}
 			}
+			if(mem[i][1] == null || mem[i][1].equals("null")){
+				mem[i][0] = null;
+			}
 		}
 		// System.out.println("MEM After CLEANING : " );
 		// System.out.println();
@@ -151,9 +158,9 @@ public class Scheduler {
 			int end = (int) mem[24][1];
 			return new Process(new ProcessControlBlock(pid, s, pc, start, end));
 		}
-		Interpeter.printMemory();
+	//	Interpeter.printMemory();
 		Process p = goGetItFromHD(x);
-		Interpeter.printMemory();
+		//Interpeter.printMemory();
 		return p;
 	}
 	//PCB
@@ -218,19 +225,19 @@ public class Scheduler {
 							
 						}
 					}
-					System.out.println("pid : "+pid);
-					System.out.println("state : "+s);
-					System.out.println("pc : "+pc);
-					System.out.println("start : "+start);
-					System.out.println("end : "+end);
-					System.out.println("a : "+a);
-					System.out.println("aVal : "+aVal);
-					System.out.println("b : "+b);
-					System.out.println("bVal : "+bVal);
-					System.out.println("c : "+c);
-					System.out.println("cVal : "+cVal);
-					System.out.println("vars : "+vars);
-					System.out.println("names : "+names);
+					// System.out.println("pid : "+pid);
+					// System.out.println("state : "+s);
+					// System.out.println("pc : "+pc);
+					// System.out.println("start : "+start);
+					// System.out.println("end : "+end);
+					// System.out.println("a : "+a);
+					// System.out.println("aVal : "+aVal);
+					// System.out.println("b : "+b);
+					// System.out.println("bVal : "+bVal);
+					// System.out.println("c : "+c);
+					// System.out.println("cVal : "+cVal);
+					// System.out.println("vars : "+vars);
+					// System.out.println("names : "+names);
 
 
 
@@ -290,38 +297,7 @@ public class Scheduler {
         return null;
     }
 
-    public static void main( String[] args) {
-         OS os = new OS();
-
-         Kernel kernel = new Kernel();
-
-        MemoryManager memoryManager = new MemoryManager();
-        Interpeter i = new Interpeter();
     
-        System.out.println("--------------------------------------------------");
-        i.textToProcess(i.readFile("Program_1.txt"));
-		i.lastID++;
-		i.textToProcess(i.readFile("Program_2.txt"));
-		i.lastID++;
-		i.textToProcess(i.readFile("Program_3.txt"));
-        i.printMemory();
-        System.out.println("--------------------------------------------------");
-		System.out.println(Kernel.readFromDisk("hardDisk.txt"));
-		System.out.println("--------------------------------------------------");
-		System.out.println("--------------------------------------------------");
-		System.out.println("--------------------------------------------------");
-		Scheduler s = new Scheduler();
-		Process p = s.goGetItFromHD(1);
-
-
-
-
-		 i.printMemory();
-        System.out.println("--------------------------------------------------");
-		System.out.println(Kernel.readFromDisk("hardDisk.txt"));
-		// MemoryManager.freeMemory(0, 19);
-		//System.out.println(Kernel.readFromDisk("hardDisk.txt"));
-    }
 
 
 

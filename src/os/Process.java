@@ -47,14 +47,15 @@ public class Process implements Comparable<Process>{
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
 
         System.out.print("Executing Instruction (process>'" + pcb.processID  +"'):  => "+ (instruction == null?"null": instruction.toString()));
+        Kernel.showOutput();
 
         if(instruction != null && (instruction.type == InstType.input || instruction.type == InstType.readFile)){
             System.out.println("  /------> HINT::::[next instruction]:::: " + InstructionParser.parseInstruction((String) MemoryManager.memory[pc+1][1]));
         } else System.out.println();
 
-        if(instruction != null && instruction.toString().equals("semSignal( userInput )")){
-            System.out.println("here");
-        }
+        // if(instruction != null && instruction.toString().equals("semSignal( userInput )")){
+        //     System.out.println("here");
+        // }
          
         if(id == one){
             MemoryManager.memory[2][1] = pcb.getProgramCounter();
@@ -76,19 +77,19 @@ public class Process implements Comparable<Process>{
 	
 	public boolean isFinished() {
         //System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
-        if(pcb.getProcessID() == 1 && pcb.getProgramCounter() == 17){
-            Interpeter.printMemory();
-        }
-        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
-        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1] == null);
-        System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1] instanceof String);
+        // if(pcb.getProcessID() == 1 && pcb.getProgramCounter() == 17){
+        //     Interpeter.printMemory();
+        // // }
+        // System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1]);
+        // System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1] == null);
+        // System.out.println(MemoryManager.memory[pcb.getProgramCounter()][1] instanceof String);
         if(MemoryManager.memory[pcb.getProgramCounter()][1] instanceof String
         &&( ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith(" ")
         || ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith("\n")
         || ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith("\r")
         || ((String)MemoryManager.memory[pcb.getProgramCounter()][1]).endsWith("\t")
         )){
-            System.out.println("here");
+            // System.out.println("here");
             String s = (String)MemoryManager.memory[pcb.getProgramCounter()][1];
             MemoryManager.memory[pcb.getProgramCounter()][1] = s.substring(0, s.length()-1);
         }

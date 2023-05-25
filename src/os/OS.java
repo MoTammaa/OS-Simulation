@@ -24,6 +24,7 @@ public class OS {
 
     
     public OS(){
+         Kernel.writeToDisk("", "hardDisk.txt");
         this.readyQueue = new LinkedList<Integer>();
         this.blockedQueue = new LinkedList<Integer>();
          outpMutex = new OutputMutex();
@@ -39,6 +40,9 @@ public class OS {
     
 
  
+    public static Queue<Integer> getBlockedQueue() {
+        return blockedQueue;
+    }
     public static void addToReadyQueue(int processID) {
         readyQueue.add(processID);
     }
