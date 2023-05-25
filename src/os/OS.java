@@ -75,6 +75,7 @@ public class OS {
     OS os = new OS();
 
     Kernel kernel = new Kernel();
+    Kernel.clearOutputStream();
 
     MemoryManager memoryManager = new MemoryManager();
     Object [][] memory = memoryManager.memory;

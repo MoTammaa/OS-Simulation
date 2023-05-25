@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Interpeter {
+public class Interpreter {
     static int lastID = 1 ;
-    public Interpeter(String filename) {
+    public Interpreter(String filename) {
 
         addProgram(filename);
 //        if(lastID == 1){
@@ -20,7 +20,7 @@ public class Interpeter {
         textToProcess(readFile(filename));
     }
 
-    public Interpeter(String filename1 , String filename2) {
+    public Interpreter(String filename1 , String filename2) {
         boolean start = false;
         addProgram(filename1);
         if(lastID == 1){
@@ -35,7 +35,7 @@ public class Interpeter {
         lastID++;
     }
 
-    public Interpeter() {
+    public Interpreter() {
     }
 
     public ArrayList<String> readFile(String fileName) {
@@ -87,10 +87,18 @@ public class Interpeter {
        if(((State)memory[1][1]).equals( State.RUNNING)){
             memoryStart = 20;
             memoryEnd = 39;
-         }
-          else{
+       }
+       else if(((State)memory[21][1]).equals( State.RUNNING)){
             memoryStart = 0;
             memoryEnd = 19;
+       } else {
+           if(OS.getReadyQueue().peek().equals((Integer) memory[0][1])){ //neither is running && awel process heya eli fe el ready queue
+                memoryStart = 20;
+                memoryEnd = 39;
+           } else {
+                memoryStart = 0;
+                memoryEnd = 19;
+           }
        }
        MemoryManager.freeMemory(memoryStart,memoryEnd);
     }
@@ -136,7 +144,7 @@ public class Interpeter {
     public static void printMemory(){
         Object [][] memory = MemoryManager.memory;
         for(int i = 0 ; i < 40 ; i++){
-            System.out.println("Memory["+i+"][0] = "+memory[i][0]+" Memory["+i+"][1] = "+memory[i][1]);
+            Kernel.out_println("Memory["+i+"][0] = "+memory[i][0]+" \t\t\tMemory["+i+"][1] = "+memory[i][1]);
         }
     }
 

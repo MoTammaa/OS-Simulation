@@ -37,13 +37,13 @@ public class Process implements Comparable<Process>{
 
         int one =(int) MemoryManager.memory[0][1];
         int pc = pcb.getProgramCounter();
-        if(pcb.processID == 1 ){
-            System.out.println((String) MemoryManager.memory[pc][1]);
-        }
+//        if(pcb.processID == 1 ){
+//            System.out.println((String) MemoryManager.memory[pc][1]);
+//        }
 
         pcb.setProgramCounter(pc+1);
        // Interpeter.printMemory();
-        System.out.println("Intruction ::"+MemoryManager.memory[pc][1]);
+//        System.out.println("Intruction ::"+MemoryManager.memory[pc][1]);
         Instruction instruction = InstructionParser.parseInstruction((String) MemoryManager.memory[pc][1]);
 
         System.out.print("Executing Instruction (process>'" + pcb.processID  +"'):  => "+ (instruction == null?"null": instruction.toString()));

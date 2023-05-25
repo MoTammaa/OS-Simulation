@@ -1,0 +1,226 @@
+Memory[0][0] = processID 			Memory[0][1] = 1
+Memory[1][0] = processState 			Memory[1][1] = READY
+Memory[2][0] = programCounter 			Memory[2][1] = 8
+Memory[3][0] = startMemoryBoundary 			Memory[3][1] = 0
+Memory[4][0] = endMemoryBoundary 			Memory[4][1] = 19
+Memory[5][0] = null 			Memory[5][1] = null
+Memory[6][0] = null 			Memory[6][1] = null
+Memory[7][0] = null 			Memory[7][1] = null
+Memory[8][0] = Instruction0 			Memory[8][1] = semWait userInput
+Memory[9][0] = Instruction1 			Memory[9][1] = input
+Memory[10][0] = Instruction2 			Memory[10][1] = assign a input
+Memory[11][0] = Instruction3 			Memory[11][1] = input
+Memory[12][0] = Instruction4 			Memory[12][1] = assign b input
+Memory[13][0] = Instruction5 			Memory[13][1] = semSignal userInput
+Memory[14][0] = Instruction6 			Memory[14][1] = semWait userOutput
+Memory[15][0] = Instruction7 			Memory[15][1] = printFromTo a b
+Memory[16][0] = Instruction8 			Memory[16][1] = semSignal userOutput
+Memory[17][0] = null 			Memory[17][1] = null
+Memory[18][0] = null 			Memory[18][1] = null
+Memory[19][0] = null 			Memory[19][1] = null
+Memory[20][0] = null 			Memory[20][1] = null
+Memory[21][0] = null 			Memory[21][1] = null
+Memory[22][0] = null 			Memory[22][1] = null
+Memory[23][0] = null 			Memory[23][1] = null
+Memory[24][0] = null 			Memory[24][1] = null
+Memory[25][0] = null 			Memory[25][1] = null
+Memory[26][0] = null 			Memory[26][1] = null
+Memory[27][0] = null 			Memory[27][1] = null
+Memory[28][0] = null 			Memory[28][1] = null
+Memory[29][0] = null 			Memory[29][1] = null
+Memory[30][0] = null 			Memory[30][1] = null
+Memory[31][0] = null 			Memory[31][1] = null
+Memory[32][0] = null 			Memory[32][1] = null
+Memory[33][0] = null 			Memory[33][1] = null
+Memory[34][0] = null 			Memory[34][1] = null
+Memory[35][0] = null 			Memory[35][1] = null
+Memory[36][0] = null 			Memory[36][1] = null
+Memory[37][0] = null 			Memory[37][1] = null
+Memory[38][0] = null 			Memory[38][1] = null
+Memory[39][0] = null 			Memory[39][1] = null
+***********************************
+*          Queues:                *
+*                                 *
+* Ready Queue:                    *
+* [] *
+*                                 *
+* Blocked Queue:                  *
+* [] *
+*                                 *
+* Queues of Mutexes:              *
+*                                 *
+* FileMutex Blocked Queue :       *
+* [] *
+*                                 *
+* InputMutex Blocked Queue :      *
+* [] *
+*                                 *
+* OutputMutex Blocked Queue :     *
+* [] *
+*                                 *
+* Process Timing Queue :          *
+* [Pair [cycle=2, program=Program_2.txt], Pair [cycle=3, program=Program_3.txt]] *
+*                                 *
+
+* The Memory :                    *
+*                                 *
+Memory[0][0] = processID 			Memory[0][1] = 1
+Memory[1][0] = processState 			Memory[1][1] = READY
+Memory[2][0] = programCounter 			Memory[2][1] = 8
+Memory[3][0] = startMemoryBoundary 			Memory[3][1] = 0
+Memory[4][0] = endMemoryBoundary 			Memory[4][1] = 19
+Memory[5][0] = null 			Memory[5][1] = null
+Memory[6][0] = null 			Memory[6][1] = null
+Memory[7][0] = null 			Memory[7][1] = null
+Memory[8][0] = Instruction0 			Memory[8][1] = semWait userInput
+Memory[9][0] = Instruction1 			Memory[9][1] = input
+Memory[10][0] = Instruction2 			Memory[10][1] = assign a input
+Memory[11][0] = Instruction3 			Memory[11][1] = input
+Memory[12][0] = Instruction4 			Memory[12][1] = assign b input
+Memory[13][0] = Instruction5 			Memory[13][1] = semSignal userInput
+Memory[14][0] = Instruction6 			Memory[14][1] = semWait userOutput
+Memory[15][0] = Instruction7 			Memory[15][1] = printFromTo a b
+Memory[16][0] = Instruction8 			Memory[16][1] = semSignal userOutput
+Memory[17][0] = null 			Memory[17][1] = null
+Memory[18][0] = null 			Memory[18][1] = null
+Memory[19][0] = null 			Memory[19][1] = null
+Memory[20][0] = null 			Memory[20][1] = null
+Memory[21][0] = null 			Memory[21][1] = null
+Memory[22][0] = null 			Memory[22][1] = null
+Memory[23][0] = null 			Memory[23][1] = null
+Memory[24][0] = null 			Memory[24][1] = null
+Memory[25][0] = null 			Memory[25][1] = null
+Memory[26][0] = null 			Memory[26][1] = null
+Memory[27][0] = null 			Memory[27][1] = null
+Memory[28][0] = null 			Memory[28][1] = null
+Memory[29][0] = null 			Memory[29][1] = null
+Memory[30][0] = null 			Memory[30][1] = null
+Memory[31][0] = null 			Memory[31][1] = null
+Memory[32][0] = null 			Memory[32][1] = null
+Memory[33][0] = null 			Memory[33][1] = null
+Memory[34][0] = null 			Memory[34][1] = null
+Memory[35][0] = null 			Memory[35][1] = null
+Memory[36][0] = null 			Memory[36][1] = null
+Memory[37][0] = null 			Memory[37][1] = null
+Memory[38][0] = null 			Memory[38][1] = null
+Memory[39][0] = null 			Memory[39][1] = null
+*                                 *
+
+* The Hard Disk :                 *
+* processID 2
+processState READY
+programCounter 29
+startMemoryBoundary 20
+endMemoryBoundary 39
+null null
+null null
+null null
+Instruction0 semWait userInput
+Instruction1 input
+Instruction2 assign a input
+Instruction3 semSignal userInput
+Instruction4 semWait file
+Instruction5 readFile a
+Instruction6 assign b readFile a
+Instruction7 semSignal file
+Instruction8 semWait userOutput
+Instruction9 print b
+Instruction10 semSignal userOutput
+null null
+
+
+ *
+***********************************
+***********************************
+*          Queues:                *
+*                                 *
+* Ready Queue:                    *
+* [] *
+*                                 *
+* Blocked Queue:                  *
+* [] *
+*                                 *
+* Queues of Mutexes:              *
+*                                 *
+* FileMutex Blocked Queue :       *
+* [] *
+*                                 *
+* InputMutex Blocked Queue :      *
+* [] *
+*                                 *
+* OutputMutex Blocked Queue :     *
+* [] *
+*                                 *
+* Process Timing Queue :          *
+* [Pair [cycle=2, program=Program_2.txt], Pair [cycle=3, program=Program_3.txt]] *
+*                                 *
+
+* The Memory :                    *
+*                                 *
+Memory[0][0] = processID 			Memory[0][1] = 1
+Memory[1][0] = processState 			Memory[1][1] = READY
+Memory[2][0] = programCounter 			Memory[2][1] = 9
+Memory[3][0] = startMemoryBoundary 			Memory[3][1] = 0
+Memory[4][0] = endMemoryBoundary 			Memory[4][1] = 19
+Memory[5][0] = null 			Memory[5][1] = null
+Memory[6][0] = null 			Memory[6][1] = null
+Memory[7][0] = null 			Memory[7][1] = null
+Memory[8][0] = Instruction0 			Memory[8][1] = semWait userInput
+Memory[9][0] = Instruction1 			Memory[9][1] = input
+Memory[10][0] = Instruction2 			Memory[10][1] = assign a input
+Memory[11][0] = Instruction3 			Memory[11][1] = input
+Memory[12][0] = Instruction4 			Memory[12][1] = assign b input
+Memory[13][0] = Instruction5 			Memory[13][1] = semSignal userInput
+Memory[14][0] = Instruction6 			Memory[14][1] = semWait userOutput
+Memory[15][0] = Instruction7 			Memory[15][1] = printFromTo a b
+Memory[16][0] = Instruction8 			Memory[16][1] = semSignal userOutput
+Memory[17][0] = null 			Memory[17][1] = null
+Memory[18][0] = null 			Memory[18][1] = null
+Memory[19][0] = null 			Memory[19][1] = null
+Memory[20][0] = null 			Memory[20][1] = null
+Memory[21][0] = null 			Memory[21][1] = null
+Memory[22][0] = null 			Memory[22][1] = null
+Memory[23][0] = null 			Memory[23][1] = null
+Memory[24][0] = null 			Memory[24][1] = null
+Memory[25][0] = null 			Memory[25][1] = null
+Memory[26][0] = null 			Memory[26][1] = null
+Memory[27][0] = null 			Memory[27][1] = null
+Memory[28][0] = null 			Memory[28][1] = null
+Memory[29][0] = null 			Memory[29][1] = null
+Memory[30][0] = null 			Memory[30][1] = null
+Memory[31][0] = null 			Memory[31][1] = null
+Memory[32][0] = null 			Memory[32][1] = null
+Memory[33][0] = null 			Memory[33][1] = null
+Memory[34][0] = null 			Memory[34][1] = null
+Memory[35][0] = null 			Memory[35][1] = null
+Memory[36][0] = null 			Memory[36][1] = null
+Memory[37][0] = null 			Memory[37][1] = null
+Memory[38][0] = null 			Memory[38][1] = null
+Memory[39][0] = null 			Memory[39][1] = null
+*                                 *
+
+* The Hard Disk :                 *
+* processID 2
+processState READY
+programCounter 29
+startMemoryBoundary 20
+endMemoryBoundary 39
+null null
+null null
+null null
+Instruction0 semWait userInput
+Instruction1 input
+Instruction2 assign a input
+Instruction3 semSignal userInput
+Instruction4 semWait file
+Instruction5 readFile a
+Instruction6 assign b readFile a
+Instruction7 semSignal file
+Instruction8 semWait userOutput
+Instruction9 print b
+Instruction10 semSignal userOutput
+null null
+
+
+ *
+***********************************

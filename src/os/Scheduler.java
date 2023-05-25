@@ -112,8 +112,18 @@ public class Scheduler {
 		// System.out.println(processTiming.peek().cycle);
 		// System.out.println(processTiming.toString());
 		if(processTiming.peek().cycle == timeCycle-1) {
-			Interpeter in = new Interpeter(processTiming.poll().program);
+			Interpreter in = new Interpreter(processTiming.poll().program);
 			proccessEntered++;
+			int size = processTiming.size();
+			for (int i = 0; i < size; i++) {
+				if(processTiming.peek().cycle == timeCycle-1) {
+					Interpreter inr = new Interpreter(processTiming.poll().program);
+					proccessEntered++;
+				} else {
+					break;
+				}
+			}
+
 			return true;
 		}
 
@@ -141,6 +151,7 @@ public class Scheduler {
 	}
 	
 	private Process getPBID(int x) {
+		Interpreter.printMemory();
 		Object [] [] mem = MemoryManager.memory;
 		if(mem[0][1].equals(x)) {
 			int pid = x;
@@ -177,7 +188,7 @@ public class Scheduler {
 
 	private Process goGetItFromHD(int x) {
 		String hd =  Kernel.readFromDisk("hardDisk.txt");
-		System.out.println(hd);
+		System.out.println("Getting From HardDisk: \n" + hd);
 		//text += (memory[i][0]+"") + " " + (memory[i][1]+"") + "\n";
 		String [] lines = hd.split("\n");
 		for(int i = 0; i<lines.length;i++) {
@@ -269,7 +280,7 @@ public class Scheduler {
 					MemoryManager.freeMemory(memoryStart,memoryEnd);
 					}
 					ProcessControlBlock pcb = new ProcessControlBlock(pid, s, pc, start, end);
-					Interpeter.writeProcessToMem(memoryStart, end, pcb, vars);
+					Interpreter.writeProcessToMem(memoryStart, end, pcb, vars);
 					MemoryManager.memory[memoryStart+5][0]=a;
 					MemoryManager.memory[memoryStart+5][1]=aVal;
 					MemoryManager.memory[memoryStart+6][0]=b;

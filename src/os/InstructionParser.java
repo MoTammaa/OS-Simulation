@@ -78,7 +78,7 @@ public class InstructionParser {
                 if(tokens.length == 1){
                     System.out.println("here");
                     System.out.println(tokens[0]);
-                    Interpeter.printMemory();
+                    Interpreter.printMemory();
 
                 }
                 if(tokens[1].endsWith(" ")||tokens[1].endsWith("\n")||tokens[1].endsWith("\r")||tokens[1].endsWith("\t")){

@@ -1,9 +1,6 @@
 package os;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Kernel {
@@ -118,6 +115,29 @@ public static void overrideDisk(String text, String filename) {
 		m.semSignal(pid);
 
 	}
+	public static void clearOutputStream(){
+		try {
+			new FileWriter(new File("OutputStream.txt"), false).close();
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+
+	public static void out_println(Object obj) {
+		try {
+			File file = new File("OutputStream.txt");
+			FileWriter fr = new FileWriter(file, true);
+			PrintWriter printWriter = new PrintWriter(fr);
+			StringBuilder stringBuilder = new StringBuilder(obj.toString());
+			stringBuilder.append("\n");
+			printWriter.write(stringBuilder.toString());
+			printWriter.flush();
+			printWriter.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+//		System.out.println(obj);
+	}
 	
 public static void showOutput() {
 	/*• Queues should be printed after every scheduling event, i.e. when a process
@@ -131,36 +151,36 @@ instructions per time slice.
 • The memory shown every clock cycle in a human readable format.
 • The ID of any process whenever it is swapped in or out of disk.
 • The format of the memory stored on Disk. */
-System.out.println("***********************************");
-System.out.println("*          Queues:                *");
-System.out.println("*                                 *");
-System.out.println("* Ready Queue:                    *");
-System.out.println("* " + OS.getReadyQueue().toString() + " *");
-System.out.println("*                                 *");
-System.out.println("* Blocked Queue:                  *");
-System.out.println("* " + OS.getBlockedQueue().toString() + " *");
-System.out.println("*                                 *");
-System.out.println("* Queues of Mutexes:              *");
-System.out.println("*                                 *");
-System.out.println("* FileMutex Blocked Queue :       *");
-System.out.println("* " + new FileMutex().getBlockedQueue().toString() + " *");
-System.out.println("*                                 *");
-System.out.println("* InputMutex Blocked Queue :      *");
-System.out.println("* " + new InputMutex().getBlockedQueue().toString() + " *");
-System.out.println("*                                 *");
-System.out.println("* OutputMutex Blocked Queue :     *");
-System.out.println("* " + new OutputMutex().getBlockedQueue().toString() + " *");
-System.out.println("*                                 *");
-System.out.println("* Process Timing Queue :          *");
-System.out.println("* " + new Scheduler(1).processTiming.toString() + " *");
-System.out.println("*                                 *");
-System.out.println("* The Memory :                    *");
-System.out.println("*                                 *");
-Interpeter.printMemory();
-System.out.println("*                                 *");
-System.out.println("* The Hard Disk :                 *");
-System.out.println("* " + readFromDisk("hardDisk.txt") + " *");
-System.out.println("***********************************");
+Kernel.out_println("***********************************");
+Kernel.out_println("*          Queues:                *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("* Ready Queue:                    *");
+Kernel.out_println("* " + OS.getReadyQueue().toString() + " *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("* Blocked Queue:                  *");
+Kernel.out_println("* " + OS.getBlockedQueue().toString() + " *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("* Queues of Mutexes:              *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("* FileMutex Blocked Queue :       *");
+Kernel.out_println("* " + new FileMutex().getBlockedQueue().toString() + " *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("* InputMutex Blocked Queue :      *");
+Kernel.out_println("* " + new InputMutex().getBlockedQueue().toString() + " *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("* OutputMutex Blocked Queue :     *");
+Kernel.out_println("* " + new OutputMutex().getBlockedQueue().toString() + " *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("* Process Timing Queue :          *");
+Kernel.out_println("* " + Scheduler.processTiming.toString() + " *");
+Kernel.out_println("*                                 *");
+Kernel.out_println("\n* The Memory :                    *");
+Kernel.out_println("*                                 *");
+Interpreter.printMemory();
+Kernel.out_println("*                                 *");
+Kernel.out_println("\n* The Hard Disk :                 *");
+Kernel.out_println("* " + readFromDisk("hardDisk.txt") + " *");
+Kernel.out_println("***********************************");
 
 
 

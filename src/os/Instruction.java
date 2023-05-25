@@ -85,10 +85,10 @@ public class Instruction {
 //        else
             argument0 = args[0];
         if(args[1] instanceof Instruction){
-            Interpeter.printMemory();
+            Interpreter.printMemory();
             //get the data from input or readFile instruction just above me
             Instruction k = (Instruction) args[1];
-            System.out.println(k.toString());
+//            System.out.println(k.toString());
             for(int h = 0 ;h<k.args.length;h++){
                 System.out.println(k.args[h]);
             }
