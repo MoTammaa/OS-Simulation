@@ -20,6 +20,10 @@ public class Scheduler {
 		while(proccessEntered < MAX_PROCESSES || OS.getReadyQueue().size() > 0) {
 			System.out.println("\n************************************");
 			System.out.println("------------------We are in the scheduler Time Slice: "+ timeCycle++);
+			if(timeCycle == 11){
+				System.out.println("Time Slice 10 reached");
+				
+			}
 			if( !checkForNewProcesses()){
 				if(OS.getReadyQueue().size() == 0) {
 					System.out.println("\nNO Process Currently in the Kernel!!");
@@ -30,6 +34,7 @@ public class Scheduler {
 			int x = OS.getReadyQueue().remove();
 			// execute 2 instructions
 			Process p  = getPBID(x);
+			cleanTheMEM();
 			p.getPcb().setProcessState(State.RUNNING);
 			p.executeNextInstruction();
 			if(OS.isBlocked(p.getPcb().getProcessID())) {
@@ -67,6 +72,32 @@ public class Scheduler {
 
 
 		}			
+	}
+
+	private void cleanTheMEM() {
+		// System.out.println("MEM BEFORE CLEANING : " );
+		// System.out.println();
+		// Interpeter.printMemory();
+		Object[][] mem = MemoryManager.memory;
+		for(int i = 0; i < 20; i++) {
+			if(mem[i][0] instanceof String){
+				String s = (String) mem[i][0];
+				if(s.endsWith(" ") || s.endsWith("\n") || s.endsWith("\t") || s.endsWith("\r")){
+					mem[i][0] = s.substring(0, s.length()-1);
+
+				}
+			}
+			if(mem[i][1] instanceof String){
+				String s= (String) mem[i][1];
+				if(s.endsWith(" ") || s.endsWith("\n") || s.endsWith("\t") || s.endsWith("\r")){
+					mem[i][1] = s.substring(0, s.length()-1);
+
+				}
+			}
+		}
+		// System.out.println("MEM After CLEANING : " );
+		// System.out.println();
+		// Interpeter.printMemory();
 	}
 
 	private boolean checkForNewProcesses(){

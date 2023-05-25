@@ -84,9 +84,23 @@ public class Instruction {
 //            argument0 = (Instruction)((Instruction) args[0]).execute(start,end);
 //        else
             argument0 = args[0];
-        if(args[1] instanceof Instruction)
+        if(args[1] instanceof Instruction){
+            Interpeter.printMemory();
             //get the data from input or readFile instruction just above me
-            argument1 = MemoryManager.memory[pc-1][1] /*OLD>>((Instruction) args[1]).execute(start,end)*/;
+            Instruction k = (Instruction) args[1];
+            System.out.println(k.toString());
+            for(int h = 0 ;h<k.args.length;h++){
+                System.out.println(k.args[h]);
+            }
+            if(k.type.equals(InstType.readFile)){
+                Object a = k.args[0];
+                argument1 = Kernel.readFromMemory(a.toString(),x, y);
+            }
+            else{
+                argument1 = MemoryManager.memory[pc-1][1] /*OLD>>((Instruction) args[1]).execute(start,end)*/;
+            }
+                
+        }
         else
             argument1 = args[1];
 

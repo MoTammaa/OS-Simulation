@@ -1,20 +1,20 @@
-processID 3
+processID 1
 processState READY
-programCounter 10
+programCounter 17
 startMemoryBoundary 0
 endMemoryBoundary 19
-null null
-null null
+a 1
+b 10
 null null
 Instruction0 semWait userInput
-Instruction1 h.txt
+Instruction1 1
 Instruction2 assign a input
-Instruction3 input
+Instruction3 10
 Instruction4 assign b input
 Instruction5 semSignal userInput
-Instruction6 semWait file
-Instruction7 writeFile a b
-Instruction8 semSignal file
+Instruction6 semWait userOutput
+Instruction7 printFromTo a b
+Instruction8 semSignal userOutput
 Instruction9 null
 Instruction10 null
 null null

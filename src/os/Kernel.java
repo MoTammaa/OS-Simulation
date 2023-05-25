@@ -90,7 +90,8 @@ public static void overrideDisk(String text, String filename) {
 	}
 	public static void writeToMemory(String varName, Object value,int start,int end) {
 		for (int i = start; i < end; i++) {
-			if (MemoryManager.memory[i][0] == null || MemoryManager.memory[i][0].equals(varName)/* overwrite a variable */) {
+			if (MemoryManager.memory[i][0] == null || MemoryManager.memory[i][0].equals(varName)/* overwrite a variable */
+					|| MemoryManager.memory[i][0].equals("null")) {
 				// if(i <= start+5 && i <= start+7){
 				// 	if(!varName.startsWith("Instruction")){
 				// 		continue;
